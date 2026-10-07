@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITP 132 – Advanced Database Systems | Quiz Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="h-full text-slate-800 bg-slate-100 font-sans flex flex-col antialiased">
+
+    <!-- Top Fixed Header -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-600 p-2 rounded-lg text-white font-bold flex items-center justify-center w-10 h-10 shadow">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 2.21 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white leading-tight">ITP 132 – Advanced Database Systems</h1>
+                    <p class="text-xs text-slate-400">Faculty: <span class="text-slate-200 font-medium">Rich Anjo Capiloyan</span> | Quiz Portal</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Select Your Quiz</h2>
+            <p class="text-sm text-slate-500 mt-2">ITP 132 – Advanced Database Systems (Quiz #1 to #5)</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+            <!-- Quiz #1 : ENABLED -->
+            <a href="quiz1.html" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg hover:border-brand-500 transition">
+                <div>
+                    <span class="inline-block bg-emerald-100 text-emerald-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-200">Available</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #1</h3>
+                    <p class="text-xs text-slate-500 mt-1">35 items · Database Concepts, SQL Syntax, JOINs & Query Writing</p>
+                </div>
+                <div class="mt-6">
+                    <span class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 group-hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition text-sm">
+                        <span>Start Quiz #1</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </span>
+                </div>
+            </a>
+
+            <!-- Quiz #2 : DISABLED -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #2 is not yet available">
+                <div>
+                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Locked
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #2</h3>
+                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                </div>
+                <div class="mt-6">
+                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                </div>
+            </div>
+
+            <!-- Quiz #3 : DISABLED -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #3 is not yet available">
+                <div>
+                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Locked
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #3</h3>
+                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                </div>
+                <div class="mt-6">
+                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                </div>
+            </div>
+
+            <!-- Quiz #4 : DISABLED -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #4 is not yet available">
+                <div>
+                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Locked
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #4</h3>
+                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                </div>
+                <div class="mt-6">
+                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                </div>
+            </div>
+
+            <!-- Quiz #5 : DISABLED -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #5 is not yet available">
+                <div>
+                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Locked
+                    </span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #5</h3>
+                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                </div>
+                <div class="mt-6">
+                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
