@@ -340,6 +340,7 @@
                 <div>
                     <h3 class="text-base font-bold">Official Quiz #1 Result PDF</h3>
                     <p class="text-xs text-slate-300 mt-0.5">Your result PDF is uploaded directly to the instructor Drive folder on submit.</p>
+                    <p class="text-xs text-amber-300 bg-amber-500/10 border border-amber-400/40 rounded-lg px-3 py-2 mt-2"><span class="font-bold">Note:</span> If the upload fails or an error occurs, take a screenshot of this results page showing your score and PM it directly to your faculty.</p>
                     <p id="driveUploadStatus" class="text-xs mt-2 hidden px-3 py-2 rounded-lg border"></p>
                 </div>
                 <button id="btnDriveUpload" onclick="uploadResultPDFToDrive(true)" class="shrink-0 bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
@@ -417,7 +418,7 @@
                     "A secondary indexing key that permits NULL values for all entries",
                     "A query command used to retrieve duplicate rows from a join request"
                 ],
-                correctAnswer: "A column or set of columns that uniquely identifies each row in a table",
+                a: "CHQzXl9HQD9VBggRSV8wUgYQRTMKHAUIHFASRFpXVRpPXVpFFFJbG0UgMDVfR1tLOBAaWlRbWSxSGxkScAweUARSV1NSXlM=", s: "334a77be",
                 points: 1,
                 timeLimit: 40
             },
@@ -433,7 +434,7 @@
                     "Candidate Key",
                     "Composite Key"
                 ],
-                correctAnswer: "Foreign Key",
+                a: "DzsiVFpVQ3E+DAM=", s: "ad640862",
                 points: 1,
                 timeLimit: 40
             },
@@ -449,7 +450,7 @@
                     "The overall data schema structure",
                     "A collection of unorganized column aliases"
                 ],
-                correctAnswer: "A single individual record or entity instance",
+                a: "CHQjWF1VQTRVABRVU0wtFhwXCXAXFRMKAEcSX0AWRFROXxYfFApdSkwoOjNU", s: "6bf4c398",
                 points: 1,
                 timeLimit: 40
             },
@@ -465,7 +466,7 @@
                     "Record or Instance",
                     "Relation or Primary Key"
                 ],
-                correctAnswer: "Field or Attribute",
+                a: "Dz01XVcSQiNVKA5FSFMmBx0T", s: "ee89e3e8",
                 points: 1,
                 timeLimit: 40
             },
@@ -481,7 +482,7 @@
                     "GROUP BY",
                     "HAVING"
                 ],
-                correctAnswer: "WHERE",
+                a: "HhwVY3Y=", s: "f91fd79a",
                 points: 1,
                 timeLimit: 40
             },
@@ -497,7 +498,7 @@
                     "BETWEEN",
                     "EXISTS"
                 ],
-                correctAnswer: "LIKE",
+                a: "BR0bdA==", s: "fac05af4",
                 points: 1,
                 timeLimit: 40
             },
@@ -513,7 +514,7 @@
                     "ORDER BY column_name ASC",
                     "GROUP BY column_name DESC"
                 ],
-                correctAnswer: "ORDER BY column_name DESC",
+                a: "BgYUdGESbwhVChVdT1cqLQcXCDVFNDU2MQ==", s: "24ba2118",
                 points: 1,
                 timeLimit: 40
             },
@@ -529,7 +530,7 @@
                     "FILTER",
                     "MAX"
                 ],
-                correctAnswer: "LIMIT",
+                a: "BR0deGc=", s: "4ad855de",
                 points: 1,
                 timeLimit: 40
             },
@@ -545,7 +546,7 @@
                     "INNER JOIN",
                     "FULL OUTER JOIN"
                 ],
-                correctAnswer: "INNER JOIN",
+                a: "ABoedGESZx48Jw==", s: "b9b7ba71",
                 points: 1,
                 timeLimit: 40
             },
@@ -561,7 +562,7 @@
                     "RIGHT JOIN",
                     "CROSS JOIN"
                 ],
-                correctAnswer: "LEFT JOIN",
+                a: "BREWZRN4Yhg7", s: "fe8416ad",
                 points: 1,
                 timeLimit: 40
             },
@@ -577,7 +578,7 @@
                     "NAME",
                     "RENAME"
                 ],
-                correctAnswer: "AS",
+                a: "CAc=", s: "8cc2bc1e",
                 points: 1,
                 timeLimit: 40
             },
@@ -593,7 +594,7 @@
                     "All 5 rows of Table A will appear regardless of match",
                     "No rows of Table B will appear if there are no matches"
                 ],
-                correctAnswer: "All 3 rows of Table B will appear in the result set at least once",
+                a: "CDg8EQASXz4CGlpeXBoQEwsaAHAnUAcMHk8SUUJGRFtIF1taF0ZbXUE7MSNEX0YNIhAdWlBOGigXCAURcAoeEwA=", s: "7247238a",
                 points: 1,
                 timeLimit: 40
             },
@@ -604,19 +605,20 @@
                 type: "fill-blank",
                 category: "SQL Fill-in-Blank",
                 question: "Complete the missing SQL keyword: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM student _____ gpa >= 3.0;</code>",
-                correctAnswer: "WHERE",
+                a: "HhwVY3Y=", s: "7e17b7b6",
                 points: 1,
                 timeLimit: 30
             },
             // Q14
             {
                 id: 14,
-                type: "fill-blank",
-                category: "SQL Fill-in-Blank",
-                question: "Complete the missing direction keyword for ascending order: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT student_id, name FROM student ORDER BY name _____;</code>",
-                correctAnswer: "ASC",
+                type: "query-writing",
+                category: "Query Writing",
+                question: "Write an SQL query to display <code>student_name</code> of students whose <code>gpa</code> equals the highest <code>gpa</code> in the <code>student</code> table, using a single-row single-column subquery.",
+                a: "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aYysgYn0SVBUodG0RG2FoHTAqLhF3exxaDgYEeUU2Iio/A0FER1JEVE4dWA==", s: "4ce0823e",
+                ax: ["GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aYysgYn0SVBUodG0RG2FoHTAqLhF3exxaDgYEeUU2Iio/A0FER1JEVE4d"],
                 points: 1,
-                timeLimit: 30
+                timeLimit: 60
             },
             // Q15
             {
@@ -624,19 +626,20 @@
                 type: "fill-blank",
                 category: "SQL Fill-in-Blank",
                 question: "Complete the SQL query clause to restrict output to 10 rows: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM course _____ 10;</code>",
-                correctAnswer: "LIMIT",
+                a: "BR0deGc=", s: "a19e8155",
                 points: 1,
                 timeLimit: 30
             },
             // Q16
             {
                 id: 16,
-                type: "fill-blank",
-                category: "SQL Fill-in-Blank",
-                question: "Complete the SQL keyword used for renaming column 'name' to 'student_name': <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT name _____ student_name FROM student;</code>",
-                correctAnswer: "AS",
+                type: "query-writing",
+                category: "Query Writing",
+                question: "Write an SQL query to display <code>program_name</code> of programs with no enrolled students, using a multi-row single-column subquery.",
+                a: "GhEcdHBmDSEHBh1DW1cbHAgbAHAjIj8oUlNAX1VEQFcaNSp3YncXFEImMyJQXm1ENVUnNWUacwpSQSUgHCAzJEUCUV1XQFdMZVMGQnRifXpEQz0hNFRdRgRq", s: "bb2027d0",
+                ax: ["GhEcdHBmDSEHBh1DW1cbHAgbAHAjIj8oUlNAX1VEQFcaNSp3YncXFEImMyJQXm1ENVUnNWUacwpSQSUgHCAzJEUCUV1XQFdMZVMGQnRifXpEQz0hNFRdRgQ="],
                 points: 1,
-                timeLimit: 30
+                timeLimit: 60
             },
             // Q17
             {
@@ -644,41 +647,43 @@
                 type: "fill-blank",
                 category: "SQL Fill-in-Blank",
                 question: "Complete the SQL join keyword: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM student _____ program ON student.program_id = program.program_id;</code>",
-                correctAnswer: "JOIN",
-                accepts: ["JOIN", "INNER JOIN"],
+                a: "AxsZfw==", s: "0c62daba",
+                ax: ["AxsZfw==", "ABoedGESZx48Jw=="],
                 points: 1,
                 timeLimit: 30
             },
             // Q18
             {
                 id: 18,
-                type: "fill-blank",
-                category: "SQL Fill-in-Blank",
-                question: "Fill in the missing JOIN modifier keyword: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT student.name, program.program_name FROM student _____ JOIN program ON student.program_id = program.program_id;</code>",
-                correctAnswer: "INNER",
-                accepts: ["INNER", "LEFT", "RIGHT"],
+                type: "query-writing",
+                category: "Query Writing",
+                question: "Scenario: <code>faculty(fac_id, fac_name, dept_id, room_no)</code> and <code>office(dept_id, room_no)</code>.<br/>Write an SQL query to display <code>fac_name</code> of faculty whose (<code>dept_id</code>, <code>room_no</code>) pair appears in the <code>office</code> table, using a multi-column subquery.",
+                a: "GhEcdHBmDTcUCiVfW1chUi8kKh1FFhEGB09GSRJhaX9oJhAeUgdGR2cgMHwRQV1CPCoHFRgacwpSQSUgHCAzJEUWRkJEbV9FFhoRX1lbPVhcGA8GH3wTXUs3HAofGAE=", s: "c066b638",
+                ax: ["GhEcdHBmDTcUCiVfW1chUi8kKh1FFhEGB09GSRJhaX9oJhAeUgdGR2cgMHwRQV1CPCoHFRgacwpSQSUgHCAzJEUWRkJEbV9FFhoRX1lbPVhcGA8GH3wTXUs3HAofGA=="],
                 points: 1,
-                timeLimit: 30
+                timeLimit: 60
             },
             // Q19
             {
                 id: 19,
-                type: "fill-blank",
-                category: "SQL Fill-in-Blank",
-                question: "Fill in the join condition key word: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM instructor JOIN department _____ instructor.dept_id = department.dept_id;</code>",
-                correctAnswer: "ON",
+                type: "query-writing",
+                category: "Query Writing",
+                question: "Write an SQL query to display <code>student_name</code> of students who have at least one row in the <code>enrollment</code> table, using a correlated subquery with <code>EXISTS</code>.",
+                a: "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aRhViLCEzfBYMDBliZ2ENeSYsNnR5bmRDSTA3HyhQFQsATF5cX1NPThpQFWIsITN8Fix6I0VGVkg/ATYTVRoHZAFHBRElARUeES1KVhkJ", s: "555dda96",
+                ax: ["GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aRhViLCEzfBYMDBliZ2ENeSYsNnR5bmRDSTA3HyhQFQsATF5cX1NPThpQFWIsITN8Fix6I0VGVkg/ATYTVRoHZAFHBRElARUeES1KVhk=", "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aYn1wNiFBfG4ABwRiExp+FDksOWUaC2Q0OzkocAAeAgoeT19VXEIBbXJwZ3BEAQ9LWSU4PVRdRgMiARweVFROGxsNVlhwFgQFARdNRh5BQlReX1tBag0ASAI=", "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aYn1wNiFBfG4ABwRiExp+FDksOWUaC2Q0OzkocAAeAgoeT19VXEIBbXJwZ3BEAQ9LWSU4PVRdRgMiARweVFROGxsNVlhwFgQFARdNRh5BQlReX1tBag0ASA=="],
                 points: 1,
-                timeLimit: 30
+                timeLimit: 60
             },
             // Q20
             {
                 id: 20,
-                type: "fill-blank",
-                category: "SQL Fill-in-Blank",
-                question: "Complete the missing operator to check against multiple program IDs: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM student WHERE program_id _____ (101, 102, 103);</code>",
-                correctAnswer: "IN",
+                type: "query-writing",
+                category: "Query Writing",
+                question: "Using a Common Table Expression (<code>WITH</code>), combine <code>stud_name</code> from <code>student</code> and <code>fac_name</code> from <code>faculty</code> with <code>UNION</code>, and label each name as 'A-group' or 'Other' with a <code>CASE</code> statement (an <code>IF()</code> version is also accepted).",
+                a: "Hh0EeRNCSD4FBR8Re2lkWjozKRUmJFAWBlZWb1xXTF8acDcWWgQMXRAPBh98E0FZJBEMFEUabwo7JjhFAyA8NSYmA1RRUWlPW1dURHdnRQ9ZXSx0FmN8fw03FAoPXU5DbVI6MykVJiRQCxNOVxwSdWBpfxEzfnErQVZRJDFwfXp5aHFSKF8WGm4MNydWQhFIFwIKB1MVEHd6cn8aFitCXAATHxAMGhQRcmENMhQdH1ZVSD1SLyQqHUUAFQoCT1cL", s: "1d64ea80",
+                ax: ["Hh0EeRNCSD4FBR8Re2lkWjozKRUmJFAWBlZWb1xXTF8acDcWWgQMXRAPBh98E0FZJBEMFEUabwo7JjhFAyA8NSYmA1RRUWlPW1dURHdnRQ9ZXSx0FmN8fw03FAoPXU5DbVI6MykVJiRQCxNOVxwSdWBpfxEzfnErQVZRJDFwfXp5aHFSKF8WGm4MNydWQhFIFwIKB1MVEHd6cn8aFitCXAATHxAMGhQRcmENMhQdH1ZVSD1SLyQqHUUAFQoCT1c=", "Hh0EeRNCSD4FBR8Re2lkWjozKRUmJFAWBlZWb1xXTF8acDcWWgQMXRAPBh98E0FZJBEMFEUabwo7JjhFAyA8NSYmA1RRUWlPW1dURHdnRQ9ZXSx0FmN8fw03FAoPXU5DbVI6MykVJiRQCxNOVxwSf2cSVFAJUxQpKHN1aXMRFBQeDXY0RB1DVU80VUVWQh8RGBUXVQoScWEWQltOVANZRhxBfmIGGXBBVl1dPRBS", "Hh0EeRNCSD4FBR8Re2lkWjozKRUmJFAWBlZWb1xXTF8acDcWWgQMXRAPBh98E0FZJBEMFEUabwo7JjhFAyA8NSYmA1RRUWlPW1dURHdnRQ9ZXSx0FmN8fw03FAoPXU5DbVI6MykVJiRQCxNOVxwSf2cSVFAJUxQpKHN1aXMRFBQeDXY0RB1DVU80VUVWQh8RGBUXVQoScWEWQltOVANZRhxBfmIGGXBBVl1dPRA="],
                 points: 1,
-                timeLimit: 30
+                timeLimit: 60
             },
 
             // Q21
@@ -693,7 +698,7 @@
                     "Unique Candidate Constraint",
                     "Composite Attribute Index"
                 ],
-                correctAnswer: "Foreign Key",
+                a: "DzsiVFpVQ3E+DAM=", s: "e30d6020",
                 points: 1,
                 timeLimit: 40
             },
@@ -709,7 +714,7 @@
                     "5 rows",
                     "0 rows"
                 ],
-                correctAnswer: "3 rows",
+                a: "enQiXkRB", s: "87b6c7c5",
                 points: 1,
                 timeLimit: 40
             },
@@ -725,7 +730,7 @@
                     "Yes, INNER JOIN includes all rows from the right table",
                     "Yes, it causes a SQL syntax error"
                 ],
-                correctAnswer: "No, INNER JOIN excludes non-matching rows",
+                a: "Bzt8EXp8YxQnSTB+c3RkFxEVCSUBFQNFHExcHV9XVVlSDwwEEUEOEhI=", s: "fbc13aea",
                 points: 1,
                 timeLimit: 40
             },
@@ -741,7 +746,7 @@
                     "Empty String",
                     "The query will fail"
                 ],
-                correctAnswer: "NULL",
+                a: "BwEcfQ==", s: "ef894b66",
                 points: 1,
                 timeLimit: 40
             },
@@ -751,7 +756,7 @@
                 type: "fill-blank",
                 category: "Scenario Interpretation",
                 question: "In a university database with <code>faculty</code> and <code>department</code>, write the JOIN type keyword to display ALL faculty members regardless of whether they are currently assigned to a department: <br/><code class='sql-code text-xs sm:text-sm block mt-2'>SELECT * FROM faculty _____ JOIN department ON faculty.dept_id = department.dept_id;</code>",
-                correctAnswer: "LEFT",
+                a: "BREWZQ==", s: "7f0b373f",
                 points: 1,
                 timeLimit: 30
             },
@@ -761,12 +766,9 @@
                 id: 26,
                 type: "query-writing",
                 category: "Query Writing",
-                question: "Write an SQL query to select all columns from the <code>student</code> table where <code>gpa</code> is greater than or equal to 3.5.",
-                correctAnswer: "SELECT * FROM student WHERE gpa >= 3.5;",
-                accepts: [
-                    "SELECT * FROM student WHERE gpa >= 3.5",
-                    "select * from student where gpa >= 3.5;"
-                ],
+                question: "Write an SQL query to display <code>student_name</code> of students whose <code>gpa</code> is greater than the average <code>gpa</code> of all students, using a subquery.",
+                a: "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aZ3lxZnZCVxUodG4RG2FoHTAqLhF7bANaDgYEeUU2Iio/A0FER1JEVE4ZCg==", s: "01443b0e",
+                ax: ["GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aZ3lxZnZCVxUodG4RG2FoHTAqLhF7bANaDgYEeUU2Iio/A0FER1JEVE4Z"],
                 points: 1,
                 timeLimit: 60
             },
@@ -775,12 +777,9 @@
                 id: 27,
                 type: "query-writing",
                 category: "Query Writing",
-                question: "Write an SQL query to retrieve <code>student_name</code> and <code>email</code> from the <code>student</code> table, sorted by <code>student_name</code> in ascending order.",
-                correctAnswer: "SELECT student_name, email FROM student ORDER BY student_name ASC;",
-                accepts: [
-                    "SELECT student_name, email FROM student ORDER BY student_name ASC",
-                    "SELECT student_name, email FROM student ORDER BY student_name"
-                ],
+                question: "Write an SQL query to retrieve <code>student_name</code> of students whose <code>student_id</code> appears in the <code>enrollment</code> table, using a subquery.",
+                a: "GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aZSokanESQ0Q8MDVfR21ENVUgNBESaQE+LDUxcBYEBQEXTUZvW1IBfGh9L0FdWkBfXCU5NV9HGxY=", s: "2ba84200",
+                ax: ["GhEcdHBmDSIBHB5UVE4bHAgbAHAjIj8oUlBGRVZTT04aZSokanESQ0Q8MDVfR21ENVUgNBESaQE+LDUxcBYEBQEXTUZvW1IBfGh9L0FdWkBfXCU5NV9HGw=="],
                 points: 1,
                 timeLimit: 60
             },
@@ -789,11 +788,9 @@
                 id: 28,
                 type: "query-writing",
                 category: "Query Writing",
-                question: "Write an SQL query to select <code>course_code</code> and <code>course_title</code> from the <code>course</code> table, limited to 5 records.",
-                correctAnswer: "SELECT course_code, course_title FROM course LIMIT 5;",
-                accepts: [
-                    "SELECT course_code, course_title FROM course LIMIT 5"
-                ],
+                question: "Write an SQL query to display <code>course_title</code> of the course(s) having the highest <code>credits</code>, using a subquery.",
+                a: "GhEcdHBmDTIaHAhCX2UwGx0aAHAjIj8oUkBdRUBFRBpteHVmIRRUFAAtPSRCEw8NeSYsNnR5bmQ/KC5NMxcVFAwGUBsQdGRudxpTX0EWR1JPXg==", s: "004d47fe",
+                ax: ["GhEcdHBmDTIaHAhCX2UwGx0aAHAjIj8oUkBdRUBFRBpteHVmIRRUFAAtPSRCEw8NeSYsNnR5bmQ/KC5NMxcVFAwGUBsQdGRudxpTX0EWR1JP"],
                 points: 1,
                 timeLimit: 60
             },
@@ -821,12 +818,8 @@
                         ]
                     }
                 ],
-                correctAnswer: "SELECT student.stud_name, program.prog_name FROM student JOIN program ON student.prog_id = program.prog_id;",
-                accepts: [
-                    "SELECT student.stud_name, program.prog_name FROM student JOIN program ON student.prog_id = program.prog_id",
-                    "SELECT student.stud_name, program.prog_name FROM student INNER JOIN program ON student.prog_id = program.prog_id",
-                    "SELECT stud_name, prog_name FROM student JOIN program ON student.prog_id = program.prog_id"
-                ],
+                a: "GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHBFGXFI9WQAkMXB3YX1gcQYdD1VfVDBSIzksHkUAAgoVUVNdEnlvGklGFFBWWxYZETs7N25aVg1sVRkIXl1IJR9HBhc/Ai8ZAUk=", s: "2a435b7a",
+                ax: ["GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHBFGXFI9WQAkMXB3YX1gcQYdD1VfVDBSIzksHkUAAgoVUVNdEnlvGklGFFBWWxYZETs7N25aVg1sVRkIXl1IJR9HBhc/Ai8ZAQ==", "GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHBFGXFI9WQAkMXB3YX1gcQYdD1VfVDBSIDgrFTdQOio7bRJAQFlGSFtfQXt9FRFDFC0xPkUdQl8+EjYTVRoHZAIbGQIiBB1eFQBMVW9bUg==", "GhEcdHBmDSIBHB5uVFspF0VWFSIKFy8LE05XEHRkbncaQRVBV1AMQ0EDGxl/E0JfPhIbG1wadQpSGgIQNAAeBEsCUV1XbV9FGgcSEUZcUhBWDGckIl5UbUQ1"],
                 points: 1,
                 timeLimit: 60
             },
@@ -854,11 +847,8 @@
                         ]
                     }
                 ],
-                correctAnswer: "SELECT instructor.name, department.dept_name FROM instructor LEFT JOIN department ON instructor.dept_id = department.dept_id;",
-                accepts: [
-                    "SELECT instructor.name, department.dept_name FROM instructor LEFT JOIN department ON instructor.dept_id = department.dept_id",
-                    "SELECT name, dept_name FROM instructor LEFT JOIN department ON instructor.dept_id = department.dept_id"
-                ],
+                a: "GhEcdHBmDTgbGg5DT1kwHRtYCzEIFVxFFkZCUUBCTF9UQBtVUxRGO1ooOTURdWBiHFUAFEJOSDERHRkXcCk1NjFSaX15fBZFX0pVR0VbAVwQFAYacFhdQVkjAAoOXkgUIBcZAjo5AVBNRRZGQlFAQkxfVEAbVVMURjtdLW8=", s: "4516d2d4",
+                ax: ["GhEcdHBmDTgbGg5DT1kwHRtYCzEIFVxFFkZCUUBCTF9UQBtVUxRGO1ooOTURdWBiHFUAFEJOSDERHRkXcCk1NjFSaX15fBZFX0pVR0VbAVwQFAYacFhdQVkjAAoOXkgUIBcZAjo5AVBNRRZGQlFAQkxfVEAbVVMURjtdLQ==", "GhEcdHBmDT8UBB8dGl4hAh0pCzEIFVAjIGx/EFtYUk5IQVZFWRYSKHEPAHB7fHtjcREMClBITikXBwJFHytQGQsBV0BFUUJOSBRQUEFCO1sAFHR0NFRDU18lGAwURRReIQIdKQw0"],
                 points: 1,
                 timeLimit: 60
             },
@@ -868,12 +858,8 @@
                 type: "query-writing",
                 category: "Query Writing",
                 question: "Scenario: University system stores <code>enrollment</code> (enrollment_id, student_id, course_id) and <code>course</code> (course_id, course_name, credits).<br/>Write an SQL query to retrieve <code>student_id</code> and <code>course_name</code> by joining <code>enrollment</code> and <code>course</code> on <code>course_id</code>.",
-                correctAnswer: "SELECT enrollment.student_id, course.course_name FROM enrollment JOIN course ON enrollment.course_id = course.course_id;",
-                accepts: [
-                    "SELECT enrollment.student_id, course.course_name FROM enrollment JOIN course ON enrollment.course_id = course.course_id",
-                    "SELECT enrollment.student_id, course.course_name FROM enrollment INNER JOIN course ON enrollment.course_id = course.course_id",
-                    "SELECT student_id, course_name FROM enrollment JOIN course ON enrollment.course_id = course.course_id"
-                ],
+                a: "GhEcdHBmDTQbGxVdVlchHB1YFiQQFBULBnxbVB4WQlVPRUUDGgFYRBc6MQ9fUl9IcTM7NXwaXyoABhoJPQAeBEU4bHt+ElVOT0hEU0Z7LBdUCzs7PF1eV0MlWwoVREhJIS0AEkVtRRMfEABQVx5RWVRISVJpD1BZ", s: "76f4b71e",
+                ax: ["GhEcdHBmDTQbGxVdVlchHB1YFiQQFBULBnxbVB4WQlVPRUUDGgFYRBc6MQ9fUl9IcTM7NXwaXyoABhoJPQAeBEU4bHt+ElVOT0hEU0Z7LBdUCzs7PF1eV0MlWwoVREhJIS0AEkVtRRMfEABQVx5RWVRISVJpD1A=", "GhEcdHBmDTQbGxVdVlchHB1YFiQQFBULBnxbVB4WQlVPRUUDGgFYRBc6MQ9fUl9IcTM7NXwaXyoABhoJPQAeBEU7bXx1YBZrdXN5FgVbF0VCAGkbHhFWXF8+GQUXVFROahEGAxcjAC8ZAVIeElNdQ1NJXxlVCUEQRFQ6IDA=", "GhEcdHBmDSIBHB5UVE4bGw1aRTMKBQIWF3xcUV9TAXxoeHtGUQxFXgklOTVfRxJnHjwnWlJVTzYBDFYqHkUVHhcdT15dV1hVFFlYQxRHB2hYAWlpcFJcR18iEEcZXk9INxc2HwE="],
                 points: 1,
                 timeLimit: 60
             },
@@ -883,11 +869,8 @@
                 type: "query-writing",
                 category: "Query Writing",
                 question: "Scenario: Library system stores <code>book</code> (book_id, title, author_id) and <code>author</code> (author_id, author_name).<br/>Write an SQL query to display <code>title</code> and <code>author_name</code> for books where <code>author_name</code> is equal to 'Date'.",
-                correctAnswer: "SELECT book.title, author.author_name FROM book JOIN author ON book.author_id = author.author_id WHERE author.author_name = 'Date';",
-                accepts: [
-                    "SELECT book.title, author.author_name FROM book JOIN author ON book.author_id = author.author_id WHERE author.author_name = 'Date'",
-                    "SELECT title, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE author_name = 'Date'"
-                ],
+                a: "GhEcdHBmDTMaBhEfTlMwHgxaRTEQBBgKAA1TRUZeTkhlXVQIUUN0Z3wEdDJeXFkNGzogNBFbTzAaBgRFHytQEgodSBxRR0JJVUhsXAEUXhJURj08P0MdU1glHQYIblNeZCUhMzcVRREFERpMQB5TQ1VSVUFqC1UOVxUOaXMUUEdXCmo=", s: "35e4c253",
+                ax: ["GhEcdHBmDTMaBhEfTlMwHgxaRTEQBBgKAA1TRUZeTkhlXVQIUUN0Z3wEdDJeXFkNGzogNBFbTzAaBgRFHytQEgodSBxRR0JJVUhsXAEUXhJURj08P0MdU1glHQYIblNeZCUhMzcVRREFERpMQB5TQ1VSVUFqC1UOVxUOaXMUUEdXCg==", "GhEcdHBmDSUcHRZUFholBx0eCiI6HhEIFwN0Yn17AVhVXF5Ffix7exMoISRZXEANHjtJGF5VUWoTHAINPxcvGQFSHhJRR0JJVUgdVBBAC11HbCAwcGZ7d38UVQgPRVJVNi0HFwg1RU1QQjZCRlUV"],
                 points: 1,
                 timeLimit: 60
             },
@@ -896,22 +879,9 @@
                 id: 33,
                 type: "query-writing",
                 category: "Query Writing",
-                question: "Write an SQL query to select <code>name</code> and <code>age</code> from <code>student</code> where <code>age</code> is between 18 and 22 inclusive.",
-                sampleTables: [
-                    {
-                        tableName: "student",
-                        headers: ["id", "name", "age", "program_id"],
-                        rows: [
-                            [101, "Carlos", 19, 10],
-                            [102, "Diana", 23, 20]
-                        ]
-                    }
-                ],
-                correctAnswer: "SELECT name, age FROM student WHERE age BETWEEN 18 AND 22;",
-                accepts: [
-                    "SELECT name, age FROM student WHERE age BETWEEN 18 AND 22",
-                    "SELECT name, age FROM student WHERE age >= 18 AND age <= 22"
-                ],
+                question: "Write an SQL query to display <code>title</code> of books whose <code>author_id</code> matches an author named 'Date', using a subquery on the <code>author</code> table.",
+                a: "GhEcdHBmDSUcHRZUGnwWPSRWBz8KG1AyOmZgdRJXVE5SDRQ5D10SfStpfAN0f3duBVUID0VSVTYtABJFFjc/PUUTVkZYXUQBbXInNCNGWEdADSYmD19SX0hxSElddVtOIVVATQ==", s: "bfff924e",
+                ax: ["GhEcdHBmDSUcHRZUGnwWPSRWBz8KG1AyOmZgdRJXVE5SDRQ5D10SfStpfAN0f3duBVUID0VSVTYtABJFFjc/PUUTVkZYXUQBbXInNCNGWEdADSYmD19SX0hxSElddVtOIVVA", "GhEcdHBmDSUcHRZUGnwWPSRWBz8KG1AyOmZgdRJXVE5SDRQ5D10SCUVhBxV9dnF5cRQcDllVSBsbDVYjAio9UAQHV1pfQBZ2cn8wI0YHTEZcCjsLPlBeVw1sVU4+UE5fY1s="],
                 points: 1,
                 timeLimit: 60
             },
@@ -920,11 +890,9 @@
                 id: 34,
                 type: "query-writing",
                 category: "Query Writing",
-                question: "Scenario: Table <code>faculty</code> contains columns <code>fac_id</code>, <code>fac_name</code>, and <code>room_no</code>.<br/>Write an SQL query selecting <code>fac_name</code> from <code>faculty</code> where <code>room_no</code> IS NOT NULL.",
-                correctAnswer: "SELECT fac_name FROM faculty WHERE room_no IS NOT NULL;",
-                accepts: [
-                    "SELECT fac_name FROM faculty WHERE room_no IS NOT NULL"
-                ],
+                question: "Write an SQL query to display <code>stud_name</code> of students whose <code>program_id</code> belongs to a program under the 'Engineering' college, using a subquery on the <code>program</code> table.",
+                a: "GhEcdHBmDSIBHB5uVFspF0kwNx8oUAMRB0dXXkYWdnJ/NnQZEkRaUhAoOQ9YVxJkH1VBKXR2fwcmSQYXPwICEQgtSlYQdGRudxoUQ1YFRFRYQh4cFWN2Ek4+GQUfVl8aeVJOMws3DB4VAABKXFcVHxo=", s: "d19b655b",
+                ax: ["GhEcdHBmDSIBHB5uVFspF0kwNx8oUAMRB0dXXkYWdnJ/NnQZEkRaUhAoOQ9YVxJkH1VBKXR2fwcmSQYXPwICEQgtSlYQdGRudxoUQ1YFRFRYQh4cFWN2Ek4+GQUfVl8aeVJOMws3DB4VAABKXFcVHw=="],
                 points: 1,
                 timeLimit: 60
             },
@@ -950,12 +918,8 @@
                         ]
                     }
                 ],
-                correctAnswer: "SELECT student.stud_name, program.program_name, program.college FROM student INNER JOIN program ON student.program_id = program.program_id WHERE program.college = 'Engineering';",
-                accepts: [
-                    "SELECT student.stud_name, program.program_name, program.college FROM student INNER JOIN program ON student.program_id = program.program_id WHERE program.college = 'Engineering'",
-                    "SELECT student.stud_name, program.program_name, program.college FROM student JOIN program ON student.program_id = program.program_id WHERE program.college = 'Engineering'",
-                    "SELECT stud_name, program_name, college FROM student INNER JOIN program ON student.program_id = program.program_id WHERE college = 'Engineering'"
-                ],
+                a: "GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHRJECgFHA18WOjFcVh4NIQcGHUNbV2oRBhoJNQIVUCMgbH8QQUJUXl9dFhYsKHsnYGkeH3h9El0jGg4IUFcaCzxJBRElARUeEVxTQF9VREBXZVoGFlhGRRBdLiYxXB1CXz4SGxtcZVMgUj4+IAIgUAAXHURAUV8YQlVWXwdRAEYIQhUMOjdYXVdIIxwHHRYB", s: "3b6ef5b2",
+                ax: ["GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHRJECgFHA18WOjFcVh4NIQcGHUNbV2oRBhoJNQIVUCMgbH8QQUJUXl9dFhYsKHsnYGkeH3h9El0jGg4IUFcaCzxJBRElARUeEVxTQF9VREBXZVoGFlhGRRBdLiYxXB1CXz4SGxtcZVMgUj4+IAIgUAAXHURAUV8YQlVWXwdRAEYIQhUMOjdYXVdIIxwHHRY=", "GhEcdHBmDSIBHB5UVE5qAR0DAQ8LER0AXgNCQl1RU1tXHRJECgFHA18WOjFcVh4NIQcGHUNbV2oRBhoJNQIVUCMgbH8QQUJUXl9dFhYvKXwsEjkmP1ZBU0BxOidaQk5PIBcHAksgFx8XFxNObVlWFhwaSkENURcHWExCOzs3Q1JfcjgRSS15f2gBUhkECjcXER1LEUxeXFdRRBoHE0VzCwFcDFcsJjlfVBU=", "GhEcdHBmDSIBHB5uVFspF0VWFSIKFwIEH3xcUV9TDRpZXA5aAAFQQnQbGx0RQEZYNRAHDhFzdAo3O1YvHyw+UBUATFVCU1sBdXQTEUIQAlAMRmckIl5UQEw8KgAeEQcaNAAGERcxCF4AFx1EQFFfaUheGmQqczcjFQFdJTg1VlYSEHFSLBRWU1QhFxsfCzdC"],
                 points: 1,
                 timeLimit: 60
             }
@@ -974,6 +938,45 @@
         const UPLOAD_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHYf4QUAkhGefnnT0iSO5-Us3MwXDad51U9eaode5cKw2YBON9MeUfC1zK7zus9MEsJQ/exec';
 
         let isUploading = false;
+
+        // ===============================
+        // ANSWER PROTECTION (salt + pepper, XOR + Base64)
+        // Pepper parts are found on this page and combined at runtime.
+        // Each question carries its own random salt (q.s); the answer key is
+        // stored encrypted (q.a / q.ax) and decrypted only when checking.
+        // ===============================
+        const _pp1 = 'ITP132-';
+        const _pp2 = 'Quiz1::';
+        const _pp3 = 'DrivePepper#2026!';
+        const PEPPER = _pp1 + _pp2 + _pp3;
+
+        function _xorStr(str, key) {
+            let out = "";
+            for (let i = 0; i < str.length; i++) {
+                out += String.fromCharCode(str.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+            }
+            return out;
+        }
+        function _decAnswer(enc, salt) {
+            try {
+                if (!enc || !salt) return "";
+                const key = PEPPER + "::" + salt;
+                return _xorStr(atob(enc), key);
+            } catch (e) {
+                return "";
+            }
+        }
+        // Decrypt getters (fall back to legacy plaintext for old cached states).
+        function getCorrectAnswer(q) {
+            if (q && q.a && q.s) return _decAnswer(q.a, q.s);
+            return (q && q.correctAnswer) || "";
+        }
+        function getAcceptsList(q) {
+            if (q && Array.isArray(q.ax) && q.s) {
+                try { return q.ax.map(e => _decAnswer(e, q.s)); } catch (e) { return []; }
+            }
+            return (q && Array.isArray(q.accepts)) ? q.accepts : [];
+        }
 
         let appState = {
             studentId: "",
@@ -1169,6 +1172,14 @@
         // ===============================
         window.addEventListener("DOMContentLoaded", () => {
             const hasStoredState = loadStateFromStorage();
+            // Time gate: fresh entries only allowed daily 7:00–8:00 PM (local time).
+            // Started/completed quizzes may resume after refresh; direct links outside the window bounce home.
+            const _gateH = new Date().getHours();
+            if (!(_gateH >= 19 && _gateH < 20) && !(hasStoredState && (appState.quizStarted || appState.quizCompleted))) {
+                alert("Quiz #1 can be opened at 7:00 PM (until 8:00 PM). Please come back at 7PM.");
+                window.location.href = "index.html";
+                return;
+            }
             setupPersistenceListeners();
 
             // Cache pre-start form typing so refresh before Start keeps ID/name.
@@ -1220,6 +1231,13 @@
 
             if (!studId.trim() || !studName.trim()) {
                 alert("Please fill in both Student ID and Full Student Name.");
+                return;
+            }
+
+            // Time gate: new quiz starts only allowed daily 7:00–8:00 PM (local time).
+            const _startH = new Date().getHours();
+            if (!(_startH >= 19 && _startH < 20)) {
+                alert("Quiz #1 can be opened at 7:00 PM (until 8:00 PM). Please come back at 7PM.");
                 return;
             }
 
@@ -1540,31 +1558,33 @@
             }
 
             const rawUser = userAnswer.trim();
+            const plainCorrect = getCorrectAnswer(question);
+            const acceptsList = getAcceptsList(question);
 
             if (question.type === "multiple-choice") {
-                return rawUser.toLowerCase() === question.correctAnswer.trim().toLowerCase();
+                return rawUser.toLowerCase() === String(plainCorrect).trim().toLowerCase();
             }
 
             if (question.type === "fill-blank") {
                 const normUser = rawUser.toLowerCase();
-                const normCorrect = question.correctAnswer.trim().toLowerCase();
+                const normCorrect = String(plainCorrect).trim().toLowerCase();
 
                 if (normUser === normCorrect) return true;
 
-                if (question.accepts && Array.isArray(question.accepts)) {
-                    return question.accepts.some(acc => acc.trim().toLowerCase() === normUser);
+                if (acceptsList && acceptsList.length > 0) {
+                    return acceptsList.some(acc => String(acc).trim().toLowerCase() === normUser);
                 }
                 return false;
             }
 
             if (question.type === "query-writing") {
                 const normUser = normalizeSQL(rawUser);
-                const normCorrect = normalizeSQL(question.correctAnswer);
+                const normCorrect = normalizeSQL(plainCorrect);
 
                 if (normUser === normCorrect) return true;
 
-                if (question.accepts && Array.isArray(question.accepts)) {
-                    return question.accepts.some(acc => normalizeSQL(acc) === normUser);
+                if (acceptsList && acceptsList.length > 0) {
+                    return acceptsList.some(acc => normalizeSQL(acc) === normUser);
                 }
             }
 
@@ -1610,7 +1630,7 @@
                     questionText: q.question.replace(/<[^>]*>/g, ' '),
                     type: q.type,
                     studentAnswer: userAns || "No Answer",
-                    correctAnswer: q.correctAnswer,
+                    correctAnswer: getCorrectAnswer(q),
                     status: status,
                     points: isCorrect ? (q.points || 1) : 0
                 });
@@ -2080,12 +2100,10 @@
                 if (selectionTouchesQuiz()) e.preventDefault();
             });
 
-            // Block right-click menu on questionnaire
+            // Block right-click menu page-wide (allow it inside answer inputs for paste).
             document.addEventListener("contextmenu", (e) => {
-                const el = quizEl();
-                if (isQuizVisible() && el && el.contains(e.target) && !isEditableTarget(e.target)) {
-                    e.preventDefault();
-                }
+                if (isEditableTarget(e.target)) return;
+                e.preventDefault();
             });
 
             // Block drag / selection start on questionnaire text
@@ -2102,24 +2120,28 @@
                 }
             });
 
-            // Block Ctrl+C / Ctrl+X / Ctrl+A / Ctrl+S / Ctrl+U / Ctrl+P & PrintScreen when quiz is active
+            // View-source / devtools deterrents (page-wide) + copy blocks during quiz.
+            // NOTE: a static HTML page cannot truly block View Source / DevTools
+            // (browser menu, view-source: URL, disabling JS all bypass this).
             document.addEventListener("keydown", (e) => {
+                const key = (e.key || "").toLowerCase();
+                // Always block: view-source, devtools, save/print (even inside inputs).
+                if ((e.ctrlKey || e.metaKey) && key === "u") e.preventDefault();
+                if (e.key === "F12" || ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(key))) {
+                    e.preventDefault();
+                }
+                if ((e.ctrlKey || e.metaKey) && ["s", "p"].includes(key)) e.preventDefault();
                 if (!isQuizVisible()) return;
                 if (isEditableTarget(e.target) || isEditableTarget(document.activeElement)) {
-                    // Inside answer inputs: allow normal typing/copy of own answer, but block select-all escaping? keep allowed.
+                    // Inside answer inputs: allow normal typing/copy of own answer.
                     return;
                 }
-                const key = (e.key || "").toLowerCase();
-                if ((e.ctrlKey || e.metaKey) && ["c", "x", "a", "s", "u", "p"].includes(key)) {
+                if ((e.ctrlKey || e.metaKey) && ["c", "x", "a"].includes(key)) {
                     e.preventDefault();
                 }
                 if (e.key === "PrintScreen") {
                     e.preventDefault();
                     if (navigator.clipboard) navigator.clipboard.writeText("").catch(() => {});
-                }
-                // Block F12 / Ctrl+Shift+I,J,C (devtools)
-                if (e.key === "F12" || ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(key))) {
-                    e.preventDefault();
                 }
             });
         })();
