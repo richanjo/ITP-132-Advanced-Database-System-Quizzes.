@@ -392,6 +392,33 @@
             setInterval(() => SCHEDULED_QUIZZES.forEach(updateScheduledQuizCard), 1000);
         }
         setupScheduledQuizzes();
+
+        (function () {
+            document.addEventListener("contextmenu", (e) => e.preventDefault());
+            document.addEventListener("keydown", (e) => {
+                const key = String(e.key || "").toLowerCase();
+                const mod = e.ctrlKey || e.metaKey;
+                if (e.key === "F12" || e.key === "PrintScreen") {
+                    e.preventDefault();
+                    return;
+                }
+                if (mod && key === "u") {
+                    e.preventDefault();
+                    return;
+                }
+                if (mod && e.shiftKey && ["i", "j", "c", "k", "u"].includes(key)) {
+                    e.preventDefault();
+                    return;
+                }
+                if (mod && e.altKey && ["i", "j", "c", "u"].includes(key)) {
+                    e.preventDefault();
+                    return;
+                }
+                if (mod && ["s", "p"].includes(key)) {
+                    e.preventDefault();
+                }
+            });
+        })();
     </script>
 </body>
 </html>
