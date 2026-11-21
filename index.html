@@ -59,79 +59,86 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-            <!-- Quiz #1 : TIME-GATED (open daily 7:00–8:00 PM) -->
-            <div id="quiz1Card" role="button" tabindex="0" onclick="tryOpenQuiz1()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz1();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-lg hover:border-brand-500 transition cursor-pointer">
+            <!-- Quiz #1 : LOCKED -->
+            <div id="quiz1Card" role="button" tabindex="0" onclick="tryOpenQuiz1()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz1();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none transition" aria-disabled="true" title="Quiz #1 is locked">
                 <div>
-                    <span class="inline-block bg-emerald-100 text-emerald-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-200">Available</span>
+                    <span class="inline-block bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">Locked</span>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #1</h3>
                     <p class="text-xs text-slate-500 mt-1">35 items · Database Concepts, SQL Syntax, JOINs & Query Writing</p>
-                    <p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3">Open daily 7:00 PM – 8:00 PM only</p>
+                    <p class="text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 mt-3">Locked — not available for this quiz period</p>
                 </div>
                 <div class="mt-6">
-                    <span class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 group-hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition text-sm">
-                        <span>Start Quiz #1</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </span>
+                    <button id="quiz1StartBtn" type="button" onclick="event.stopPropagation(); tryOpenQuiz1();" disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">
+                        Locked
+                    </button>
                 </div>
             </div>
 
-            <!-- Quiz #2 : DISABLED -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #2 is not yet available">
+            <!-- Quiz #2 : SCHEDULED (November 23, 2026, 7:00–8:00 PM PHT) -->
+            <div id="quiz2Card" role="button" tabindex="0" onclick="tryOpenQuiz2()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz2();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none transition" aria-disabled="true" title="Quiz #2 opens November 23, 2026 at 7:00 PM (PHT)">
                 <div>
-                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        Locked
-                    </span>
+                    <span id="quiz2StatusBadge" class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-200">Upcoming</span>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #2</h3>
-                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                    <p class="text-xs text-slate-500 mt-1">20 items · Database System Architecture and Performance Tuning</p>
+                    <p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3">Nov 23, 2026 · 7:00 PM – 8:00 PM (PHT)</p>
+                    <p id="quiz2Countdown" class="text-[11px] text-slate-500 mt-2 font-medium"></p>
                 </div>
                 <div class="mt-6">
-                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                    <button id="quiz2StartBtn" type="button" onclick="event.stopPropagation(); tryOpenQuiz2();" disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">
+                        <span id="quiz2ActionText">Opens Nov 23, 7:00 PM</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Quiz #3 : DISABLED -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #3 is not yet available">
+            <!-- Quiz #3 : SCHEDULED (November 25, 2026, 7:00–8:00 PM PHT) -->
+            <div id="quiz3Card" role="button" tabindex="0" onclick="tryOpenQuiz3()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz3();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none transition" aria-disabled="true" title="Quiz #3 opens November 25, 2026 at 7:00 PM (PHT)">
                 <div>
-                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        Locked
-                    </span>
+                    <span id="quiz3StatusBadge" class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-200">Upcoming</span>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #3</h3>
-                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                    <p class="text-xs text-slate-500 mt-1">20 items · Data Warehousing and Data Mining</p>
+                    <p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3">Nov 25, 2026 · 7:00 PM – 8:00 PM (PHT)</p>
+                    <p id="quiz3Countdown" class="text-[11px] text-slate-500 mt-2 font-medium"></p>
                 </div>
                 <div class="mt-6">
-                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                    <button id="quiz3StartBtn" type="button" onclick="event.stopPropagation(); tryOpenQuiz3();" disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">
+                        <span id="quiz3ActionText">Opens Nov 25, 7:00 PM</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Quiz #4 : DISABLED -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #4 is not yet available">
+            <!-- Quiz #4 : SCHEDULED (November 27, 2026, 7:00–8:00 PM PHT) -->
+            <div id="quiz4Card" role="button" tabindex="0" onclick="tryOpenQuiz4()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz4();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none transition" aria-disabled="true" title="Quiz #4 opens November 27, 2026 at 7:00 PM (PHT)">
                 <div>
-                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        Locked
-                    </span>
+                    <span id="quiz4StatusBadge" class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-200">Upcoming</span>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #4</h3>
-                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                    <p class="text-xs text-slate-500 mt-1">20 items · Database Administration and Security</p>
+                    <p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3">Nov 27, 2026 · 7:00 PM – 8:00 PM (PHT)</p>
+                    <p id="quiz4Countdown" class="text-[11px] text-slate-500 mt-2 font-medium"></p>
                 </div>
                 <div class="mt-6">
-                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                    <button id="quiz4StartBtn" type="button" onclick="event.stopPropagation(); tryOpenQuiz4();" disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">
+                        <span id="quiz4ActionText">Opens Nov 27, 7:00 PM</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- Quiz #5 : DISABLED -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none" aria-disabled="true" title="Quiz #5 is not yet available">
+            <!-- Quiz #5 : SCHEDULED (November 30, 2026, 7:00–8:00 PM PHT) -->
+            <div id="quiz5Card" role="button" tabindex="0" onclick="tryOpenQuiz5()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tryOpenQuiz5();}" class="group bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between opacity-60 cursor-not-allowed select-none transition" aria-disabled="true" title="Quiz #5 opens November 30, 2026 at 7:00 PM (PHT)">
                 <div>
-                    <span class="inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                        Locked
-                    </span>
+                    <span id="quiz5StatusBadge" class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-200">Upcoming</span>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Quiz #5</h3>
-                    <p class="text-xs text-slate-500 mt-1">Not yet available</p>
+                    <p class="text-xs text-slate-500 mt-1">24 items · Temporal, Spatial, and Multimedia Data</p>
+                    <p class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5 mt-3">Nov 30, 2026 · 7:00 PM – 8:00 PM (PHT)</p>
+                    <p id="quiz5Countdown" class="text-[11px] text-slate-500 mt-2 font-medium"></p>
                 </div>
                 <div class="mt-6">
-                    <button disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">Locked</button>
+                    <button id="quiz5StartBtn" type="button" onclick="event.stopPropagation(); tryOpenQuiz5();" disabled class="w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed">
+                        <span id="quiz5ActionText">Opens Nov 30, 7:00 PM</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
                 </div>
             </div>
 
@@ -145,28 +152,83 @@
                 <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <h3 class="text-xl font-bold text-slate-900">Quiz #1 is closed</h3>
-                <p class="text-sm text-slate-600 mt-2">Quiz #1 can be opened at <span class="font-bold">7:00 PM</span> (until 8:00 PM). Please come back at 7PM.</p>
+                <h3 class="text-xl font-bold text-slate-900">Quiz #1 is locked</h3>
+                <p class="text-sm text-slate-600 mt-2">Quiz #1 is currently locked and cannot be opened from this page.</p>
                 <p id="quiz1ClosedTime" class="text-xs text-slate-400 mt-2"></p>
             </div>
             <button onclick="closeQuiz1ClosedModal()" class="w-full px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition">OK, Got it</button>
         </div>
     </div>
 
+    <!-- Quiz #2 unavailable modal -->
+    <div id="quiz2ClosedModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 id="quiz2ModalTitle" class="text-xl font-bold text-slate-900">Quiz #2 is not open yet</h3>
+                <p id="quiz2ModalMessage" class="text-sm text-slate-600 mt-2"></p>
+                <p id="quiz2ClosedTime" class="text-xs text-slate-400 mt-2"></p>
+            </div>
+            <button onclick="closeQuiz2ClosedModal()" class="w-full px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition">OK, Got it</button>
+        </div>
+    </div>
+
+    <!-- Quiz #4 unavailable modal -->
+    <div id="quiz4ClosedModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 id="quiz4ModalTitle" class="text-xl font-bold text-slate-900">Quiz #4 is not open yet</h3>
+                <p id="quiz4ModalMessage" class="text-sm text-slate-600 mt-2"></p>
+                <p id="quiz4ClosedTime" class="text-xs text-slate-400 mt-2"></p>
+            </div>
+            <button onclick="closeQuiz4ClosedModal()" class="w-full px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition">OK, Got it</button>
+        </div>
+    </div>
+
+    <!-- Quiz #5 unavailable modal -->
+    <div id="quiz5ClosedModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 id="quiz5ModalTitle" class="text-xl font-bold text-slate-900">Quiz #5 is not open yet</h3>
+                <p id="quiz5ModalMessage" class="text-sm text-slate-600 mt-2"></p>
+                <p id="quiz5ClosedTime" class="text-xs text-slate-400 mt-2"></p>
+            </div>
+            <button onclick="closeQuiz5ClosedModal()" class="w-full px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition">OK, Got it</button>
+        </div>
+    </div>
+
+    <!-- Quiz #3 unavailable modal -->
+    <div id="quiz3ClosedModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 id="quiz3ModalTitle" class="text-xl font-bold text-slate-900">Quiz #3 is not open yet</h3>
+                <p id="quiz3ModalMessage" class="text-sm text-slate-600 mt-2"></p>
+                <p id="quiz3ClosedTime" class="text-xs text-slate-400 mt-2"></p>
+            </div>
+            <button onclick="closeQuiz3ClosedModal()" class="w-full px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition">OK, Got it</button>
+        </div>
+    </div>
+
     <script>
-        // Quiz #1 access window: daily 7:00 PM (inclusive) to 8:00 PM (exclusive), local time.
+        // Quiz #1 is locked from the index; access is disabled.
         function isQuiz1Open() {
-            const h = new Date().getHours();
-            return h >= 19 && h < 20;
+            return false;
         }
         function tryOpenQuiz1() {
-            if (isQuiz1Open()) {
-                window.location.href = "quiz1.html";
-            } else {
-                const t = document.getElementById("quiz1ClosedTime");
-                if (t) t.textContent = "Current time: " + new Date().toLocaleTimeString();
-                document.getElementById("quiz1ClosedModal").classList.remove("hidden");
-            }
+            const t = document.getElementById("quiz1ClosedTime");
+            if (t) t.textContent = "Access to Quiz #1 is disabled.";
+            document.getElementById("quiz1ClosedModal").classList.remove("hidden");
         }
         function closeQuiz1ClosedModal() {
             document.getElementById("quiz1ClosedModal").classList.add("hidden");
@@ -177,6 +239,159 @@
         document.getElementById("quiz1ClosedModal").addEventListener("click", (e) => {
             if (e.target.id === "quiz1ClosedModal") closeQuiz1ClosedModal();
         });
+
+        // Scheduled quizzes: fixed one-hour windows in Philippine Standard Time (UTC+8).
+        // 7:00 PM PHT = 11:00 UTC; 8:00 PM PHT = 12:00 UTC.
+        const SCHEDULED_QUIZZES = [
+            {
+                number: "2",
+                openMs: Date.UTC(2026, 10, 23, 11, 0, 0),
+                closeMs: Date.UTC(2026, 10, 23, 12, 0, 0),
+                label: "Quiz #2",
+                file: "quiz2.html",
+                openAction: "Opens Nov 23, 7:00 PM",
+                openLong: "November 23, 2026 at 7:00 PM",
+                closeLong: "November 23, 2026 at 8:00 PM"
+            },
+            {
+                number: "3",
+                openMs: Date.UTC(2026, 10, 25, 11, 0, 0),
+                closeMs: Date.UTC(2026, 10, 25, 12, 0, 0),
+                label: "Quiz #3",
+                file: "quiz3.html",
+                openAction: "Opens Nov 25, 7:00 PM",
+                openLong: "November 25, 2026 at 7:00 PM",
+                closeLong: "November 25, 2026 at 8:00 PM"
+            },
+            {
+                number: "4",
+                openMs: Date.UTC(2026, 10, 27, 11, 0, 0),
+                closeMs: Date.UTC(2026, 10, 27, 12, 0, 0),
+                label: "Quiz #4",
+                file: "quiz4.html",
+                openAction: "Opens Nov 27, 7:00 PM",
+                openLong: "November 27, 2026 at 7:00 PM",
+                closeLong: "November 27, 2026 at 8:00 PM"
+            },
+            {
+                number: "5",
+                openMs: Date.UTC(2026, 10, 30, 11, 0, 0),
+                closeMs: Date.UTC(2026, 10, 30, 12, 0, 0),
+                label: "Quiz #5",
+                file: "quiz5.html",
+                openAction: "Opens Nov 30, 7:00 PM",
+                openLong: "November 30, 2026 at 7:00 PM",
+                closeLong: "November 30, 2026 at 8:00 PM"
+            }
+        ];
+
+        function getScheduledQuizStatus(q) {
+            const now = Date.now();
+            if (now < q.openMs) return "upcoming";
+            if (now < q.closeMs) return "open";
+            return "closed";
+        }
+        function isScheduledQuizOpen(q) {
+            return getScheduledQuizStatus(q) === "open";
+        }
+        function formatScheduledQuizDuration(ms) {
+            const total = Math.max(0, Math.floor(ms / 1000));
+            const days = Math.floor(total / 86400);
+            const hours = Math.floor((total % 86400) / 3600);
+            const minutes = Math.floor((total % 3600) / 60);
+            const seconds = total % 60;
+            const pad = (n) => String(n).padStart(2, "0");
+            return (days > 0 ? days + "d " : "") + pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+        }
+        function currentPHTTime() {
+            return new Intl.DateTimeFormat("en-US", {
+                timeZone: "Asia/Manila",
+                dateStyle: "medium",
+                timeStyle: "medium"
+            }).format(new Date());
+        }
+        function updateScheduledQuizCard(q) {
+            const status = getScheduledQuizStatus(q);
+            const now = Date.now();
+            const card = document.getElementById(`quiz${q.number}Card`);
+            const badge = document.getElementById(`quiz${q.number}StatusBadge`);
+            const btn = document.getElementById(`quiz${q.number}StartBtn`);
+            const btnText = document.getElementById(`quiz${q.number}ActionText`);
+            const countdown = document.getElementById(`quiz${q.number}Countdown`);
+            if (!card || !badge || !btn || !btnText || !countdown) return;
+
+            const locked = status !== "open";
+            card.classList.toggle("opacity-60", locked);
+            card.classList.toggle("cursor-not-allowed", locked);
+            card.classList.toggle("select-none", locked);
+            card.classList.toggle("hover:shadow-lg", !locked);
+            card.classList.toggle("hover:border-brand-500", !locked);
+            card.setAttribute("aria-disabled", locked ? "true" : "false");
+            card.title = locked
+                ? (status === "upcoming" ? `${q.label} opens ${q.openLong} (PHT)` : `${q.label} closed ${q.closeLong} (PHT)`)
+                : `Open ${q.label}`;
+
+            if (status === "open") {
+                badge.textContent = "Available";
+                badge.className = "inline-block bg-emerald-100 text-emerald-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-200";
+                btn.disabled = false;
+                btn.className = "w-full inline-flex items-center justify-center gap-2 bg-brand-600 group-hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md transition text-sm";
+                btnText.textContent = `Start ${q.label}`;
+                countdown.textContent = "Closes in " + formatScheduledQuizDuration(q.closeMs - now) + " (PHT)";
+            } else if (status === "upcoming") {
+                badge.textContent = "Upcoming";
+                badge.className = "inline-flex items-center gap-1 bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-amber-200";
+                btn.disabled = true;
+                btn.className = "w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed";
+                btnText.textContent = q.openAction;
+                countdown.textContent = "Opens in " + formatScheduledQuizDuration(q.openMs - now) + " (PHT)";
+            } else {
+                badge.textContent = "Closed";
+                badge.className = "inline-flex items-center gap-1 bg-slate-100 text-slate-500 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-slate-200";
+                btn.disabled = true;
+                btn.className = "w-full inline-flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-semibold py-2.5 px-4 rounded-xl text-sm cursor-not-allowed";
+                btnText.textContent = "Closed";
+                countdown.textContent = `Closed on ${q.closeLong} (PHT)`;
+            }
+        }
+        function tryOpenScheduledQuiz(q) {
+            if (isScheduledQuizOpen(q)) {
+                window.location.href = q.file;
+                return;
+            }
+            const status = getScheduledQuizStatus(q);
+            document.getElementById(`quiz${q.number}ModalTitle`).textContent = status === "upcoming" ? `${q.label} is not open yet` : `${q.label} is closed`;
+            document.getElementById(`quiz${q.number}ModalMessage`).textContent = status === "upcoming"
+                ? `${q.label} opens on ${q.openLong} and closes at ${q.closeLong} (Philippine Standard Time).`
+                : `${q.label} closed on ${q.closeLong} (Philippine Standard Time).`;
+            document.getElementById(`quiz${q.number}ClosedTime`).textContent = "Current PHT time: " + currentPHTTime();
+            document.getElementById(`quiz${q.number}ClosedModal`).classList.remove("hidden");
+        }
+        function closeScheduledQuizModal(q) {
+            document.getElementById(`quiz${q.number}ClosedModal`).classList.add("hidden");
+        }
+        function tryOpenQuiz2() { tryOpenScheduledQuiz(SCHEDULED_QUIZZES[0]); }
+        function closeQuiz2ClosedModal() { closeScheduledQuizModal(SCHEDULED_QUIZZES[0]); }
+        function tryOpenQuiz3() { tryOpenScheduledQuiz(SCHEDULED_QUIZZES[1]); }
+        function closeQuiz3ClosedModal() { closeScheduledQuizModal(SCHEDULED_QUIZZES[1]); }
+        function tryOpenQuiz4() { tryOpenScheduledQuiz(SCHEDULED_QUIZZES[2]); }
+        function closeQuiz4ClosedModal() { closeScheduledQuizModal(SCHEDULED_QUIZZES[2]); }
+        function tryOpenQuiz5() { tryOpenScheduledQuiz(SCHEDULED_QUIZZES[3]); }
+        function closeQuiz5ClosedModal() { closeScheduledQuizModal(SCHEDULED_QUIZZES[3]); }
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") SCHEDULED_QUIZZES.forEach(closeScheduledQuizModal);
+        });
+        function setupScheduledQuizzes() {
+            SCHEDULED_QUIZZES.forEach((q) => {
+                const modal = document.getElementById(`quiz${q.number}ClosedModal`);
+                if (modal) modal.addEventListener("click", (e) => {
+                    if (e.target.id === `quiz${q.number}ClosedModal`) closeScheduledQuizModal(q);
+                });
+                updateScheduledQuizCard(q);
+            });
+            setInterval(() => SCHEDULED_QUIZZES.forEach(updateScheduledQuizCard), 1000);
+        }
+        setupScheduledQuizzes();
     </script>
 </body>
 </html>

@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITP 132 – Advanced Database Systems | Quiz #5 Portal</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- jsPDF & jsPDF-AutoTable CDNs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Pulse and visual effects */
+        @keyframes pulse-red {
+            0%, 100% { background-color: #ef4444; color: #ffffff; }
+            50% { background-color: #dc2626; color: #ffffff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+        }
+        .timer-danger {
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes countdown-pop {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: countdown-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Monospace code highlights */
+        .sql-code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            background-color: #0f172a;
+            color: #f8fafc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Sample Table Styling */
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            text-align: left;
+        }
+        .db-table th {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 0.625rem 0.875rem;
+            font-weight: 600;
+            border: 1px solid #334155;
+        }
+        .db-table td {
+            padding: 0.5rem 0.875rem;
+            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+        }
+        .db-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        /* Custom radio styling */
+        .custom-radio:checked + label {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Anti-copy protection for questionnaire */
+        #quizContainer,
+        #quizContainer *:not(input):not(textarea) {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+        #quizContainer input,
+        #quizContainer textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        @media print {
+            #quizContainer { display: none !important; }
+        }
+    </style>
+</head>
+
+<body class="h-full text-slate-800 bg-slate-100 font-sans flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Fixed Header -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-600 p-2 rounded-lg text-white font-bold flex items-center justify-center w-10 h-10 shadow">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 2.21 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white leading-tight">ITP 132 – Advanced Database Systems</h1>
+                    <p class="text-xs text-slate-400">Faculty: <span class="text-slate-200 font-medium">Rich Anjo Capiloyan</span> | Quiz #5 Portal</p>
+                </div>
+            </div>
+
+            <!-- Active User & Metadata Display -->
+            <div id="headerUserBadge" class="hidden flex items-center gap-4 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-lg text-xs">
+                <div>
+                    <span class="text-slate-400 block text-[10px] uppercase tracking-wider">Student</span>
+                    <span id="displayStudentName" class="font-semibold text-white"></span>
+                    <span id="displayStudentId" class="text-brand-300 ml-1"></span>
+                    <span id="displayStudentSection" class="text-slate-300 ml-1"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col">
+
+        <!-- 1. STUDENT INFORMATION MODAL OVERLAY -->
+        <div id="studentModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border border-slate-200 animate-pop">
+                <div class="text-center mb-6">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-50 text-brand-600 mb-3">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">ITP 132 Quiz #5</h2>
+                    <p class="text-sm text-slate-500 mt-1">BSIT Quiz 5: Temporal, Spatial, and Multimedia Data (24 Items)</p>
+                    <p class="text-xs text-slate-400 mt-0.5">Faculty: Rich Anjo Capiloyan</p>
+                    <div class="mt-5 pt-4 border-t border-slate-200 text-left space-y-2">
+                        <p class="text-xs font-bold text-slate-800">BSIT Quiz 5: Temporal, Spatial, and Multimedia Data</p>
+                        <p class="text-[11px] text-slate-600"><span class="font-semibold">Part 1. Temporal Data</span> (6 items, 1 point each)<br/>Instructions: Choose the letter of the best answer.</p>
+                        <p class="text-[11px] text-slate-600"><span class="font-semibold">Part 2. Spatial Data</span> (6 items, 1 point each)<br/>Instructions: Choose the letter of the best answer.</p>
+                        <p class="text-[11px] text-slate-600"><span class="font-semibold">Part 3. Spatial vs. Conventional Database Systems</span> (6 items, 1 point each)<br/>Instructions: Choose the letter of the best answer.</p>
+                        <p class="text-[11px] text-slate-600"><span class="font-semibold">Part 4. Multimedia Databases</span> (6 items, 1 point each)<br/>Instructions: Choose the letter of the best answer.</p>
+                    </div>
+                </div>
+
+                <form id="studentForm" class="space-y-4" onsubmit="handleStartQuiz(event)">
+                    <div>
+                        <label for="inputStudentId" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Student ID Number <span class="text-red-500">*</span></label>
+                        <input type="text" id="inputStudentId" required placeholder="e.g. 2026-0194" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition outline-none" />
+                    </div>
+
+                    <div>
+                        <label for="inputStudentName" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Full Student Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="inputStudentName" required placeholder="e.g. Juan Dela Cruz" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition outline-none" />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="inputStudentSection" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Section</label>
+                            <input type="text" id="inputStudentSection" placeholder="e.g. BSIT-3A" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm transition outline-none" />
+                        </div>
+                        <div>
+                            <label for="inputQuizDate" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Date</label>
+                            <input type="text" id="inputQuizDate" readonly class="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-600 text-sm outline-none" />
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800 space-y-1">
+                        <div class="font-semibold flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                            Quiz #5 Guidelines:
+                        </div>
+                        <p>• 24 multiple-choice items (6 per part) with strict per-question countdown timers.</p>
+                        <p>• Timed-out questions are locked automatically and marked unanswerable.</p>
+                        <p>• Progress is saved locally in browser storage.</p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-brand-500/25 transition-all duration-200 flex items-center justify-center gap-2">
+                        <span>Save and Start Quiz #5</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 2. FULLSCREEN COUNTDOWN OVERLAY -->
+        <div id="countdownOverlay" class="hidden fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center text-white">
+            <span class="text-brand-400 font-bold uppercase tracking-widest text-lg mb-4">Get Ready</span>
+            <div id="countdownNumber" class="text-8xl font-extrabold tracking-tighter text-white animate-pop">5</div>
+            <p class="text-slate-400 text-sm mt-6">Initializing ITP 132 Question Bank...</p>
+        </div>
+
+        <!-- 3. ACTIVE QUIZ CONTAINER -->
+        <div id="quizContainer" class="hidden flex-1 flex flex-col space-y-6">
+
+            <!-- Progress & Per-Question Timer Header Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <span id="questionCounterBadge" class="inline-block bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full border border-slate-200 uppercase tracking-wider">
+                            Question 1 of 20
+                        </span>
+                        <span id="questionCategoryBadge" class="inline-block ml-2 text-xs font-medium text-brand-600 bg-brand-50 px-2.5 py-1 rounded-full border border-brand-100">
+                            SQL Concept
+                        </span>
+                    </div>
+
+                    <!-- Per-Question Countdown Timer -->
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Time Remaining:</span>
+                        <div id="timerDisplayContainer" class="flex items-center gap-1.5 bg-slate-900 text-white font-mono font-bold text-lg px-4 py-1.5 rounded-xl shadow-inner transition-colors duration-300">
+                            <svg class="w-5 h-5 text-brand-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span id="timerSeconds">30</span>
+                            <span class="text-xs text-slate-400 font-sans">s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden border border-slate-200">
+                    <div id="progressBar" class="bg-brand-600 h-full transition-all duration-300 rounded-full" style="width: 5%;"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                <div>
+                    <!-- Expired Question Warning Banner -->
+                    <div id="expiredWarningBanner" class="hidden mb-6 bg-red-50 border border-red-200 text-red-700 p-3.5 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-2">
+                        <svg class="w-5 h-5 text-red-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+                        <span>Time expired for this question. Modifying this response is locked.</span>
+                    </div>
+
+                    <!-- Question Prompt -->
+                    <div class="mb-6">
+                        <h2 id="questionPromptText" class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                            Question Loading...
+                        </h2>
+                    </div>
+
+                    <!-- Optional Sample Tables Container -->
+                    <div id="sampleTablesArea" class="hidden mb-6 space-y-4">
+                        <!-- Injected sample HTML tables dynamically -->
+                    </div>
+
+                    <!-- Answer Input Area (Dynamic depending on question type) -->
+                    <div id="answerInputArea" class="space-y-3">
+                        <!-- Dynamic Input / Radio options -->
+                    </div>
+                </div>
+
+                <!-- Navigation Bar -->
+                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
+                    <button id="btnNext" onclick="navigateQuestion(1)" disabled class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                        <span id="btnNextText">Next Question</span>
+                        <svg id="btnNextIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. RESULTS / COMPLETION LOCK SCREEN -->
+        <div id="resultsContainer" class="hidden bg-white rounded-2xl shadow-xl border border-slate-200 p-6 sm:p-10 my-4 space-y-8">
+            <div class="text-center pb-6 border-b border-slate-200">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 mb-4 ring-8 ring-emerald-50/50">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h2 id="resultsBannerTitle" class="text-3xl font-extrabold text-slate-900 tracking-tight">Quiz #5 Completed</h2>
+                <p class="text-slate-500 text-sm mt-1">ITP 132 – Advanced Database Systems</p>
+                <div class="inline-block mt-2 px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-medium border border-slate-200">
+                    Faculty: Rich Anjo Capiloyan
+                </div>
+            </div>
+
+            <!-- Student Summary Header Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Student Name</span>
+                    <span id="resStudentName" class="text-base font-bold text-slate-800"></span>
+                    <span id="resStudentSection" class="block text-xs text-slate-500 mt-1"></span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Student ID</span>
+                    <span id="resStudentId" class="text-base font-bold text-brand-600 font-mono"></span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Final Score</span>
+                    <span id="resScoreText" class="text-xl font-extrabold text-slate-900">Score: 0/24</span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Percentage Grade</span>
+                    <span id="resPercentageText" class="text-xl font-extrabold text-brand-600">0.00%</span>
+                </div>
+            </div>
+
+            <!-- Score Breakdown Pills -->
+            <div class="grid grid-cols-3 gap-3 text-center">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+                    <span class="block text-2xl font-bold text-emerald-700" id="resCorrectCount">0</span>
+                    <span class="text-xs font-semibold text-emerald-600 uppercase">Correct</span>
+                </div>
+                <div class="bg-rose-50 border border-rose-200 rounded-xl p-3">
+                    <span class="block text-2xl font-bold text-rose-700" id="resIncorrectCount">0</span>
+                    <span class="text-xs font-semibold text-rose-600 uppercase">Incorrect</span>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                    <span class="block text-2xl font-bold text-amber-700" id="resUnansweredCount">0</span>
+                    <span class="text-xs font-semibold text-amber-600 uppercase">Unanswered</span>
+                </div>
+            </div>
+
+            <!-- Drive Upload CTA (result PDF is uploaded to Drive on submit, not downloaded) -->
+            <div class="bg-slate-900 text-white rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-base font-bold">Official Quiz #5 Result PDF</h3>
+                    <p class="text-xs text-slate-300 mt-0.5">Your result PDF is uploaded directly to the instructor Drive folder on submit.</p>
+                    <p class="text-xs text-amber-300 bg-amber-500/10 border border-amber-400/40 rounded-lg px-3 py-2 mt-2"><span class="font-bold">Note:</span> If the upload fails or an error occurs, take a screenshot of this results page showing your score and PM it directly to your faculty.</p>
+                    <p id="driveUploadStatus" class="text-xs mt-2 hidden px-3 py-2 rounded-lg border"></p>
+                </div>
+                <button id="btnDriveUpload" onclick="uploadResultPDFToDrive(true)" class="shrink-0 bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <span id="btnDriveUploadText">Upload PDF Result to Drive</span>
+                </button>
+            </div>
+
+            <!-- Item-by-Item Review Table (hidden per instructor request) -->
+            <div id="detailedBreakdownSection" class="space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center justify-between">
+                    <span>Detailed Item Breakdown</span>
+                    <span class="text-xs font-normal text-slate-500">24 Questions</span>
+                </h3>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200 font-semibold uppercase tracking-wider text-[11px]">
+                                <th class="p-3">#</th>
+                                <th class="p-3">Part</th>
+                                <th class="p-3">Question</th>
+                                <th class="p-3">Your Answer</th>
+                                <th class="p-3">Correct Answer</th>
+                                <th class="p-3">Explanation</th>
+                                <th class="p-3 text-center">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reviewTableBody" class="divide-y divide-slate-200">
+                            <!-- Injected review rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 5. SUBMIT CONFIRMATION MODAL -->
+    <div id="submitConfirmModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-slate-200 animate-pop">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-100 text-amber-600 mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Submit Quiz #5?</h3>
+                <p class="text-sm text-slate-600 mt-2">Are you sure you want to finalize and submit your answers?</p>
+                <p class="text-xs text-slate-400 mt-1">Once submitted, your result PDF is uploaded directly to Drive. You will not be able to take or modify the quiz again.</p>
+                <p id="submitUploadStatus" class="hidden text-xs mt-3 p-2.5 rounded-lg border"></p>
+            </div>
+
+            <div class="flex items-center justify-end gap-3">
+                <button id="btnCancelSubmit" onclick="closeSubmitModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 font-semibold text-slate-700 text-sm hover:bg-slate-50 transition">
+                    Cancel
+                </button>
+                <button id="btnConfirmSubmit" onclick="confirmQuizSubmission()" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 font-semibold text-white text-sm shadow-md transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Confirm & Submit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===============================
+        // QUIZ DATA (EXACTLY 24 ITEMS)
+        // ===============================
+        const TOTAL_QUESTIONS = 24;
+        const QUIZ5_OPEN_MS = Date.UTC(2026, 10, 30, 11, 0, 0);
+        const QUIZ5_CLOSE_MS = Date.UTC(2026, 10, 30, 12, 0, 0);
+        const QUIZ5_SCHEDULE_TEXT = "November 30, 2026, 7:00 PM – 8:00 PM (Philippine Standard Time, UTC+8)";
+        function isQuiz5WindowOpen() {
+            const now = Date.now();
+            return now >= QUIZ5_OPEN_MS && now < QUIZ5_CLOSE_MS;
+        }
+
+        const MASTER_QUESTION_BANK = [
+            // T1
+            {
+                id: 1,
+                code: "T1",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "Which of the following is an example of temporal data?",
+                options: [
+                    "A customer's home address",
+                    "An employee's job titles with the start and end date of each position",
+                    "A photograph of a building",
+                    "The location of a hospital"
+                ],
+                a: "CDpwVF5CQT4MDB8SSRouHQtWETkRHBUWUlRbRFoWVVJfGBVCU0BAEwQnMHBUXVYNNRQdHxVVXGQXCBUNcBUfAwwGSl1e", s: "8f62243e",
+                explanation: "The start and end dates give the data a time dimension.",
+                points: 1,
+                timeLimit: 40
+            },
+            // T2
+            {
+                id: 2,
+                code: "T2",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "Which time dimension answers the question \"When was this fact true in the real world?\"",
+                options: [
+                    "Valid time",
+                    "Transaction time",
+                    "Response time",
+                    "Backup time"
+                ],
+                a: "HzU8WFcSWTgYDA==", s: "aeb9b67c",
+                explanation: "Valid time is the period when a fact is true in the real world.",
+                points: 1,
+                timeLimit: 40
+            },
+            // T3
+            {
+                id: 3,
+                code: "T3",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "What does transaction time record?",
+                options: [
+                    "When a customer paid a bill",
+                    "How long a query ran",
+                    "When a fact was stored in the database",
+                    "When the server was restarted"
+                ],
+                a: "Hjw1XxNTDTcUCg4VTVs3UhoCCiIAFFAMHANGWFcWRVtOA1UDSgQ=", s: "b7b9a1ec",
+                explanation: "Transaction time is when the fact was recorded in the database, and it is normally managed by the system.",
+                points: 1,
+                timeLimit: 40
+            },
+            // T4
+            {
+                id: 4,
+                code: "T4",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "In a temporal table, a row has valid_to = '9999-12-31'. What does this usually mean?",
+                options: [
+                    "The row is invalid.",
+                    "The row will be deleted in the year 9999.",
+                    "The row has an error.",
+                    "The row is still in effect, with no end date yet."
+                ],
+                a: "HTw1EUFdWnEcGlpGTlMoHkkfC3AAFhYAEVceEEVfVVIaVlwTVQpTRVEoIDURSldZfw==", s: "8330d7e5",
+                explanation: "A far-future date is a common way to mark a currently valid, open-ended row.",
+                points: 1,
+                timeLimit: 40
+            },
+            // T5
+            {
+                id: 5,
+                code: "T5",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "Which condition finds the salary that was valid on 2025-05-15 in a table with valid_from and valid_to columns?",
+                options: [
+                    "WHERE valid_from = '2025-05-15'",
+                    "WHERE '2025-05-15' BETWEEN valid_from AND valid_to",
+                    "WHERE valid_to < '2025-05-15'",
+                    "WHERE salary = '2025-05-15'"
+                ],
+                a: "HhwVY3YSCmNFW08YCg9pQ1xRRRIgJCcgN20SRlNaSF5lAERfWRFxf3JpIjFdWlZyJRo=", s: "f6041016",
+                explanation: "The date must fall within the valid period of the row.",
+                points: 1,
+                timeLimit: 40
+            },
+            // T6
+            {
+                id: 6,
+                code: "T6",
+                type: "multiple-choice",
+                category: "Part 1. Temporal Data",
+                question: "How does a conventional (snapshot) database differ from a temporal database?",
+                options: [
+                    "A snapshot database stores all past versions of every row.",
+                    "A snapshot database cannot use SQL.",
+                    "A snapshot database normally stores only the current state of the data.",
+                    "There is no difference."
+                ],
+                a: "CHQjX1JCXjkaHVpRW04lEAgFAHALHwIIE09eSRJFVVVIBkEVDgtbQUY9PDURUEdfIxAHDhVJTiUGDFYKNkUEGABSR1NEUxg=", s: "c25ae78f",
+                explanation: "A temporal database keeps history so past states can be queried; a snapshot database keeps only the current state.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S1
+            {
+                id: 7,
+                code: "S1",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which of the following is an example of spatial data?",
+                options: [
+                    "A student's grade",
+                    "The latitude and longitude of a school",
+                    "An invoice number",
+                    "A password hash"
+                ],
+                a: "HTw1EV9TWTgBHB5QGlsqFkkaCj4CGQQQFkYSX1QWQBpJAV5ZCl8=", s: "b66e3ba8",
+                explanation: "Spatial data describes location, shape, and position in space.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S2
+            {
+                id: 8,
+                code: "S2",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which geometry type best represents the boundary of a lake?",
+                options: [
+                    "Point",
+                    "LineString",
+                    "Raster cell",
+                    "Polygon"
+                ],
+                a: "GTs8SFRdQw==", s: "4ce49e79",
+                explanation: "An area with a boundary is represented by a polygon.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S3
+            {
+                id: 9,
+                code: "S3",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which geometry type best represents a road or a pipeline?",
+                options: [
+                    "LineString",
+                    "Polygon",
+                    "Point",
+                    "Pixel"
+                ],
+                a: "BT0+VGBGXzgbDg==", s: "cd288ca4",
+                explanation: "Paths and routes are represented by LineStrings.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S4
+            {
+                id: 10,
+                code: "S4",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which MySQL function tests whether a point lies inside a polygon?",
+                options: [
+                    "ST_Distance",
+                    "ST_Within",
+                    "ST_Length",
+                    "ST_X"
+                ],
+                a: "GgAPZlpGRTgb", s: "9f85a9fa",
+                explanation: "ST_Within(point, polygon) returns true when the point is inside the polygon.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S5
+            {
+                id: 11,
+                code: "S5",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which of the following is raster spatial data?",
+                options: [
+                    "A list of GPS coordinates",
+                    "A polygon of a city boundary",
+                    "A satellite image made of grid cells",
+                    "A table of street names"
+                ],
+                a: "CHQjUEdXQT0cHR8VU1clFQxWCDEBFVAKFANVQltSAVlfCQ1G", s: "ea5a3047",
+                explanation: "Raster data represents space as a grid of cells or pixels.",
+                points: 1,
+                timeLimit: 40
+            },
+            // S6
+            {
+                id: 12,
+                code: "S6",
+                type: "multiple-choice",
+                category: "Part 2. Spatial Data",
+                question: "Which of these is an application of spatial data?",
+                options: [
+                    "Payroll processing",
+                    "Email storage",
+                    "Music streaming",
+                    "Disaster-risk mapping and GPS navigation"
+                ],
+                a: "DT0jUEBGSCNYGxNGURopExkGDD4CUBELFgN1YGEWT1tMXAFXR1FWCA==", s: "5f6389f5",
+                explanation: "Mapping, GPS navigation, ride-hailing, and urban planning all rely on spatial data.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C1
+            {
+                id: 13,
+                code: "C1",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Which data types does a conventional database mainly handle?",
+                options: [
+                    "Numbers, text, and dates",
+                    "Points, lines, and polygons",
+                    "Satellite imagery",
+                    "Coordinate reference systems"
+                ],
+                a: "ByE9U1ZAXn1VHR9NThZkEwcSRTQEBBUW", s: "73125f95",
+                explanation: "Conventional systems mainly handle alphanumeric data; spatial systems add geometry types such as points, lines, and polygons.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C2
+            {
+                id: 14,
+                code: "C2",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Which index is designed for multi-dimensional spatial data?",
+                options: [
+                    "Hash index on a name column",
+                    "B-tree on a single numeric column",
+                    "R-tree",
+                    "Primary key only"
+                ],
+                a: "G3kkQ1ZX", s: "5ace6637",
+                explanation: "R-trees group nearby objects using bounding rectangles, while B-trees order one-dimensional values.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C3
+            {
+                id: 15,
+                code: "C3",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Which type of query is typical of a spatial database but not of a conventional one?",
+                options: [
+                    "Finding all customers named Cruz",
+                    "Finding all stores within 2 km of a customer's location",
+                    "Counting the number of orders",
+                    "Sorting products by price"
+                ],
+                a: "Dz0+VVpcSnEUBRYVSU4rAAwFRScMBBgMHAMAEFlbAVVcRQJDUUFLTFokMSIWQBJBPhYIDlxVVA==", s: "ecc24885",
+                explanation: "Distance, containment, and intersection queries use spatial operators.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C4
+            {
+                id: 16,
+                code: "C4",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Why does a spatial database store a spatial reference system identifier (SRID) with geometry?",
+                options: [
+                    "To encrypt the geometry",
+                    "To name the table",
+                    "To count the rows",
+                    "To define the coordinate system so that locations and distances are interpreted correctly"
+                ],
+                a: "HTtwVVZURD8QSQ5dXxonHQYEATkLEQQAUlBLQ0ZTTBpJXkRBXVNEEl8mNzFFWl1DIlUIFFEaXi0BHRcLMwADUAQARhJZXEJESEpDAUFQVhBRXDsmNVJHXlQ=", s: "1d552023",
+                explanation: "Coordinates have meaning only within a specific coordinate system.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C5
+            {
+                id: 17,
+                code: "C5",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Which statement is true about spatial database systems?",
+                options: [
+                    "Many are extensions of relational systems, such as MySQL spatial types and PostGIS for PostgreSQL",
+                    "They cannot use SQL.",
+                    "They replace tables with files.",
+                    "They cannot store ordinary text columns."
+                ],
+                a: "BDU+SBNTXzRVDAJBX1Q3GwYYFnAKFlAXF09TRFtZT1tWEkdKSxEECEVldCNEUFoNMAZJN0xpawhSGgYEJAwRHEUGWkJVQRZAVF4SZFxLESYsZWkyP0MTYkIiAQ4IUGlrCA==", s: "2438eae6",
+                explanation: "Spatial support is usually added to a relational DBMS, so spatial and ordinary columns can sit in the same table.",
+                points: 1,
+                timeLimit: 40
+            },
+            // C6
+            {
+                id: 18,
+                code: "C6",
+                type: "multiple-choice",
+                category: "Part 3. Spatial vs. Conventional Database Systems",
+                question: "Which query requires spatial database capability?",
+                options: [
+                    "SELECT * FROM students WHERE course = 'BSIT';",
+                    "SELECT COUNT(*) FROM orders;",
+                    "SELECT name FROM stores WHERE ST_Distance_Sphere(location, @user_point) <= 2000;",
+                    "SELECT * FROM products ORDER BY price;"
+                ],
+                a: "GhEcdHBmDT8UBB8VfGgLP0kFET8XFQNFJWt3YncWcm5lIAxBEVcLVFwWByBZVkBIeRkGGVROUyscRVYlJRYVAjoCTFteRh8BBgdEVwJVBl4=", s: "de2e6e79",
+                explanation: "Only query C uses a spatial function on a geometry column.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M1
+            {
+                id: 19,
+                code: "M1",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "Which data does a multimedia database store?",
+                options: [
+                    "Only numbers",
+                    "Text, images, audio, and video",
+                    "Only coordinates",
+                    "Only dates"
+                ],
+                a: "HTEoRR8SRDwUDh9GFholBw0fCnxFER4BUlVbVFdZ", s: "35ae401d",
+                explanation: "Multimedia databases manage text, images, audio, and video.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M2
+            {
+                id: 20,
+                code: "M2",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "Which data type is commonly used to store large files such as images and videos inside a database?",
+                options: [
+                    "INT",
+                    "DATE",
+                    "VARCHAR(10)",
+                    "BLOB"
+                ],
+                a: "Cxgfcw==", s: "4791b500",
+                explanation: "BLOB (Binary Large Object) stores large binary data. Many systems instead store a file path and keep the file outside the database.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M3
+            {
+                id: 21,
+                code: "M3",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "Why do multimedia databases need large storage and high bandwidth?",
+                options: [
+                    "Because they contain only small text files",
+                    "Because multimedia files, especially video, are very large",
+                    "Because they cannot be compressed",
+                    "Because they have no indexes"
+                ],
+                a: "CzEzUEZBSHEYHBZBU1chFgAXRTYMHBUWXgNXQ0JTQlNbCgpKFUQLBlYmeHBQQVcNJxAbAxVWWzYVDA==", s: "ff352bb3",
+                explanation: "Large file sizes and continuous delivery of audio and video demand storage and bandwidth.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M4
+            {
+                id: 22,
+                code: "M4",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "What is the role of metadata (such as title, format, and duration) in a multimedia database?",
+                options: [
+                    "It makes files easier to find and describe",
+                    "It encrypts the file",
+                    "It deletes duplicate files",
+                    "It compresses the video"
+                ],
+                a: "ACBwXFJZSCJVDxNZX0lkFwgFDDUXUAQKUkVbXlYWQFReGFUBQlpEWFUs", s: "81d19617",
+                explanation: "Metadata describes media files and supports searching and organizing them.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M5
+            {
+                id: 23,
+                code: "M5",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "Which of the following is an application of multimedia databases?",
+                options: [
+                    "Payroll computation",
+                    "Video-on-demand and digital libraries",
+                    "Tax calculation",
+                    "Inventory counting only"
+                ],
+                a: "Hz00VFwfQj9YDR9YW1QgUggYAXABGRcMBkJeEF5fQ0hbFgxVFg==", s: "de0eaaa8",
+                explanation: "Video-on-demand, digital libraries, e-learning, and medical imaging use multimedia databases.",
+                points: 1,
+                timeLimit: 40
+            },
+            // M6
+            {
+                id: 24,
+                code: "M6",
+                type: "multiple-choice",
+                category: "Part 4. Multimedia Databases",
+                question: "A security system searches a database for faces that look like a photo of a suspect. Which technique is this?",
+                options: [
+                    "Keyword search",
+                    "Primary key lookup",
+                    "Content-based retrieval",
+                    "Data backup"
+                ],
+                a: "Cjs+RVZcWXwXCAlQXho2Fx0EDDUTERw=", s: "9f29f4d3",
+                explanation: "Content-based retrieval matches features such as shape, color, and texture instead of text labels.",
+                points: 1,
+                timeLimit: 40
+            }
+        ];
+
+        // ===============================
+        // APPLICATION STATE
+        // ===============================
+        const STORAGE_KEY = "itp132_quiz5_state";
+
+        // ---- Google Drive direct-upload config (same pattern as questionnaire.html) ----
+        // A shared Drive folder link alone cannot receive uploads from a static page,
+        // so uploads go through this Apps Script Web App (Execute as: Me, Access: Anyone).
+        const DRIVE_FOLDER_ID = '1czgZJrR_1hcnM1V3XSftxTgGqx9svcRB';
+        const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1czgZJrR_1hcnM1V3XSftxTgGqx9svcRB?usp=sharing';
+        const UPLOAD_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHYf4QUAkhGefnnT0iSO5-Us3MwXDad51U9eaode5cKw2YBON9MeUfC1zK7zus9MEsJQ/exec';
+
+        let isUploading = false;
+
+        // ===============================
+        // ANSWER PROTECTION (salt + pepper, XOR + Base64)
+        // Pepper parts are found on this page and combined at runtime.
+        // Each question carries its own random salt (q.s); the answer key is
+        // stored encrypted (q.a / q.ax) and decrypted only when checking.
+        // ===============================
+        const _pp1 = 'ITP132-';
+        const _pp2 = 'Quiz5::';
+        const _pp3 = 'DrivePepper#2026!';
+        const PEPPER = _pp1 + _pp2 + _pp3;
+
+        function _xorStr(str, key) {
+            let out = "";
+            for (let i = 0; i < str.length; i++) {
+                out += String.fromCharCode(str.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+            }
+            return out;
+        }
+        function _decAnswer(enc, salt) {
+            try {
+                if (!enc || !salt) return "";
+                const key = PEPPER + "::" + salt;
+                return _xorStr(atob(enc), key);
+            } catch (e) {
+                return "";
+            }
+        }
+        // Decrypt getters (fall back to legacy plaintext for old cached states).
+        function getCorrectAnswer(q) {
+            if (q && q.a && q.s) return _decAnswer(q.a, q.s);
+            return (q && q.correctAnswer) || "";
+        }
+        function getAcceptsList(q) {
+            if (q && Array.isArray(q.ax) && q.s) {
+                try { return q.ax.map(e => _decAnswer(e, q.s)); } catch (e) { return []; }
+            }
+            return (q && Array.isArray(q.accepts)) ? q.accepts : [];
+        }
+
+        let appState = {
+            studentId: "",
+            studentName: "",
+            section: "",
+            quizDate: "",
+            randomizedQuestions: [],
+            answers: {},            // { questionIndex: stringAnswer }
+            questionTimers: [],     // [ remainingSeconds ]
+            expiredQuestions: [],   // [ boolean ]
+            currentQuestionIndex: 0,
+            quizStarted: false,
+            quizCompleted: false,
+            submissionTimestamp: "",
+            scoreResult: null
+        };
+
+        let timerInterval = null;
+
+        // ===============================
+        // LOCAL STORAGE FUNCTIONS
+        // Persist everything so a page refresh restores the exact same state.
+        // ===============================
+        const FORM_DRAFT_KEY = "itp132_quiz5_form_draft";
+
+        function getDefaultAppState() {
+            return {
+                studentId: "",
+                studentName: "",
+                section: "",
+                quizDate: "",
+                randomizedQuestions: [],
+                answers: {},
+                questionTimers: [],
+                expiredQuestions: [],
+                currentQuestionIndex: 0,
+                quizStarted: false,
+                quizCompleted: false,
+                submissionTimestamp: "",
+                scoreResult: null,
+                driveUpload: { status: "idle", message: "", filename: "" }
+            };
+        }
+
+        function saveStateToStorage() {
+            try {
+                // Always persist the full quiz state: student info, shuffled order,
+                // answers, per-question timers, expired flags, current index, results.
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+            } catch (e) {
+                console.error("Error saving state to localStorage:", e);
+            }
+        }
+
+        function saveFormDraftToStorage() {
+            try {
+                const idEl = document.getElementById("inputStudentId");
+                const nameEl = document.getElementById("inputStudentName");
+                if (!idEl || !nameEl) return;
+                const sectionEl = document.getElementById("inputStudentSection");
+                localStorage.setItem(FORM_DRAFT_KEY, JSON.stringify({
+                    studentId: idEl.value || "",
+                    studentName: nameEl.value || "",
+                    section: sectionEl ? sectionEl.value || "" : ""
+                }));
+            } catch (e) {
+                console.error("Error saving form draft:", e);
+            }
+        }
+
+        function loadFormDraftFromStorage() {
+            try {
+                const stored = localStorage.getItem(FORM_DRAFT_KEY);
+                if (!stored) return;
+                const draft = JSON.parse(stored);
+                if (draft.studentId) document.getElementById("inputStudentId").value = draft.studentId;
+                if (draft.studentName) document.getElementById("inputStudentName").value = draft.studentName;
+                if (draft.section) document.getElementById("inputStudentSection").value = draft.section;
+            } catch (e) {
+                console.error("Error loading form draft:", e);
+            }
+        }
+
+        function loadStateFromStorage() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (!stored) {
+                    appState = getDefaultAppState();
+                    return false;
+                }
+                const parsed = JSON.parse(stored);
+                // Merge over defaults so corrupted / old caches never break resume.
+                const defaults = getDefaultAppState();
+                appState = Object.assign(defaults, parsed || {});
+
+                // Validate shuffled questions array.
+                if (!Array.isArray(appState.randomizedQuestions) || appState.randomizedQuestions.length === 0) {
+                    if (appState.quizStarted && !appState.quizCompleted) {
+                        // Active quiz without questions = corrupted cache; reset to fresh.
+                        appState = getDefaultAppState();
+                        return false;
+                    }
+                    appState.randomizedQuestions = [];
+                }
+
+                const n = appState.randomizedQuestions.length;
+
+                // Validate + repair parallel timer/expired arrays so refresh keeps exact remaining time.
+                if (!Array.isArray(appState.questionTimers) || appState.questionTimers.length !== n) {
+                    appState.questionTimers = appState.randomizedQuestions.map(q => q.timeLimit || 30);
+                }
+                if (!Array.isArray(appState.expiredQuestions) || appState.expiredQuestions.length !== n) {
+                    appState.expiredQuestions = new Array(n).fill(false);
+                }
+                if (!appState.answers || typeof appState.answers !== "object") appState.answers = {};
+                if (!appState.driveUpload || typeof appState.driveUpload !== "object") {
+                    appState.driveUpload = { status: "idle", message: "", filename: "" };
+                }
+
+                // Clamp current index into range so refresh lands on the same question.
+                if (typeof appState.currentQuestionIndex !== "number" || isNaN(appState.currentQuestionIndex)) {
+                    appState.currentQuestionIndex = 0;
+                }
+                if (n > 0) {
+                    appState.currentQuestionIndex = Math.min(Math.max(0, appState.currentQuestionIndex), n - 1);
+                } else {
+                    appState.currentQuestionIndex = 0;
+                }
+
+                return Boolean(appState.quizStarted || appState.quizCompleted);
+            } catch (e) {
+                console.error("Error loading state from localStorage:", e);
+                appState = getDefaultAppState();
+            }
+            return false;
+        }
+
+        function clearStorage() {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+
+        // Flush all cached data on hide/close so refresh never loses progress.
+        function setupPersistenceListeners() {
+            const flush = () => {
+                try {
+                    saveStateToStorage();
+                    // Also cache pre-start form input so refresh before Start keeps typed ID/name.
+                    if (!appState.quizStarted) saveFormDraftToStorage();
+                } catch (e) {}
+            };
+            document.addEventListener("visibilitychange", () => {
+                if (document.visibilityState === "hidden") flush();
+            });
+            window.addEventListener("pagehide", flush);
+        }
+
+        // Initialize questions in the order given by the questionnaire and their timers
+        // Timer policy: all 24 items are multiple-choice with 40s each
+        function initializeNewQuiz(studentId, studentName, section, quizDate) {
+            const quizQuestions = MASTER_QUESTION_BANK.map(q => ({ ...q }));
+
+            appState = {
+                studentId: studentId.trim(),
+                studentName: studentName.trim(),
+                section: String(section || "").trim(),
+                quizDate: String(quizDate || "").trim(),
+                randomizedQuestions: quizQuestions,
+                answers: {},
+                questionTimers: quizQuestions.map(q => q.timeLimit),
+                expiredQuestions: new Array(quizQuestions.length).fill(false),
+                currentQuestionIndex: 0,
+                quizStarted: true,
+                quizCompleted: false,
+                submissionTimestamp: "",
+                scoreResult: null
+            };
+
+            saveStateToStorage();
+        }
+
+        // ===============================
+        // QUIZ INITIALIZATION & START
+        // ===============================
+        window.addEventListener("DOMContentLoaded", () => {
+            const hasStoredState = loadStateFromStorage();
+            // Time gate: fresh entries only allowed inside the fixed Quiz #5 PHT schedule.
+            // Completed quizzes may review after refresh; direct links outside the window bounce home.
+            if (!isQuiz5WindowOpen() && !(hasStoredState && appState.quizCompleted)) {
+                alert("Quiz #5 is available only on " + QUIZ5_SCHEDULE_TEXT + ".");
+                window.location.href = "index.html";
+                return;
+            }
+            setupPersistenceListeners();
+
+            // Cache pre-start form typing so refresh before Start keeps ID/name.
+            const idInput = document.getElementById("inputStudentId");
+            const nameInput = document.getElementById("inputStudentName");
+            if (idInput) idInput.addEventListener("input", saveFormDraftToStorage);
+            if (nameInput) nameInput.addEventListener("input", saveFormDraftToStorage);
+            const sectionInput = document.getElementById("inputStudentSection");
+            if (sectionInput) sectionInput.addEventListener("input", saveFormDraftToStorage);
+            const dateInput = document.getElementById("inputQuizDate");
+            if (dateInput) dateInput.value = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+            loadFormDraftFromStorage();
+
+            if (hasStoredState && appState.quizCompleted) {
+                // Lock screen if already completed — refresh stays on results.
+                document.getElementById("studentModal").classList.add("hidden");
+                showQuizUI();
+                renderResultsScreen();
+            } else if (hasStoredState && appState.quizStarted) {
+                // Resume active quiz on the exact same question with saved timers/answers.
+                document.getElementById("studentModal").classList.add("hidden");
+                showQuizUI();
+                renderQuestion(appState.currentQuestionIndex);
+                startTimer();
+            } else {
+                // Show info modal to start
+                document.getElementById("studentModal").classList.remove("hidden");
+            }
+
+            // Persist everything before refresh/close; refresh restores identical state.
+            window.addEventListener("beforeunload", (e) => {
+                saveStateToStorage();
+                if (!appState.quizStarted) saveFormDraftToStorage();
+                if (appState.quizStarted && !appState.quizCompleted) {
+                    e.preventDefault();
+                    e.returnValue = "Quiz is currently active. Progress is saved and will resume on the same question after refresh. Leave page?";
+                }
+            });
+        });
+
+        function handleStartQuiz(event) {
+            event.preventDefault();
+            if (!isQuiz5WindowOpen()) {
+                alert("Quiz #5 is available only on " + QUIZ5_SCHEDULE_TEXT + ".");
+                return;
+            }
+            // If a quiz is already in progress (e.g. double-submit), resume it instead of resetting.
+            if (appState.quizStarted && !appState.quizCompleted && appState.randomizedQuestions.length > 0) {
+                document.getElementById("studentModal").classList.add("hidden");
+                showQuizUI();
+                renderQuestion(appState.currentQuestionIndex);
+                startTimer();
+                return;
+            }
+            const studId = document.getElementById("inputStudentId").value;
+            const studName = document.getElementById("inputStudentName").value;
+            const studSection = document.getElementById("inputStudentSection").value;
+            const studDate = document.getElementById("inputQuizDate").value;
+
+            if (!studId.trim() || !studName.trim()) {
+                alert("Please fill in both Student ID and Full Student Name.");
+                return;
+            }
+
+            // Time gate: new quiz starts only inside the fixed Quiz #5 PHT schedule.
+            if (!isQuiz5WindowOpen()) {
+                alert("Quiz #5 is available only on " + QUIZ5_SCHEDULE_TEXT + ".");
+                return;
+            }
+
+            document.getElementById("studentModal").classList.add("hidden");
+
+            // Start pre-quiz countdown
+            runPreQuizCountdown(() => {
+                initializeNewQuiz(studId, studName, studSection, studDate);
+                try { localStorage.removeItem(FORM_DRAFT_KEY); } catch (e) {}
+                showQuizUI();
+                renderQuestion(0);
+                startTimer();
+            });
+        }
+
+        function runPreQuizCountdown(onComplete) {
+            const overlay = document.getElementById("countdownOverlay");
+            const numberEl = document.getElementById("countdownNumber");
+            overlay.classList.remove("hidden");
+
+            let count = 5;
+            numberEl.textContent = count;
+
+            const interval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    numberEl.textContent = count;
+                    // Trigger pop animation re-flow
+                    numberEl.classList.remove("animate-pop");
+                    void numberEl.offsetWidth;
+                    numberEl.classList.add("animate-pop");
+                } else if (count === 0) {
+                    numberEl.textContent = "START!";
+                } else {
+                    clearInterval(interval);
+                    overlay.classList.add("hidden");
+                    onComplete();
+                }
+            }, 1000);
+        }
+
+        function showQuizUI() {
+            document.getElementById("quizContainer").classList.remove("hidden");
+            document.getElementById("headerUserBadge").classList.remove("hidden");
+            document.getElementById("displayStudentName").textContent = appState.studentName;
+            document.getElementById("displayStudentId").textContent = `(${appState.studentId})`;
+            document.getElementById("displayStudentSection").textContent = appState.section ? `· ${appState.section}` : "";
+        }
+
+        // ===============================
+        // QUESTION RENDERING
+        // ===============================
+        function renderQuestion(index) {
+            appState.currentQuestionIndex = index;
+            saveStateToStorage();
+
+            const question = appState.randomizedQuestions[index];
+            const isExpired = appState.expiredQuestions[index];
+
+            // Header info
+            document.getElementById("questionCounterBadge").textContent = `Question ${index + 1} of ${TOTAL_QUESTIONS}`;
+            document.getElementById("questionCategoryBadge").textContent = question.code ? `${question.code} · ${question.category}` : (question.category || "Quiz #5");
+
+            // Progress bar
+            const progressPct = ((index + 1) / TOTAL_QUESTIONS) * 100;
+            document.getElementById("progressBar").style.width = `${progressPct}%`;
+
+            // Expired Warning Banner
+            const warningBanner = document.getElementById("expiredWarningBanner");
+            if (isExpired) {
+                warningBanner.classList.remove("hidden");
+            } else {
+                warningBanner.classList.add("hidden");
+            }
+
+            // Prompt
+            document.getElementById("questionPromptText").innerHTML = question.question;
+
+            // Render Sample Tables if present
+            const sampleTablesArea = document.getElementById("sampleTablesArea");
+            sampleTablesArea.innerHTML = "";
+            if (question.sampleTables && question.sampleTables.length > 0) {
+                sampleTablesArea.classList.remove("hidden");
+                question.sampleTables.forEach(tableData => {
+                    const tableWrapper = document.createElement("div");
+                    tableWrapper.className = "overflow-x-auto rounded-lg border border-slate-300 shadow-sm";
+
+                    let tableHTML = `<div class="bg-slate-800 text-white font-mono text-xs font-bold px-3 py-1.5 border-b border-slate-700">Table: ${tableData.tableName}</div>`;
+                    tableHTML += `<table class="db-table"><thead><tr>`;
+                    tableData.headers.forEach(h => {
+                        tableHTML += `<th>${h}</th>`;
+                    });
+                    tableHTML += `</tr></thead><tbody>`;
+                    tableData.rows.forEach(r => {
+                        tableHTML += `<tr>`;
+                        r.forEach(cell => {
+                            tableHTML += `<td class="font-mono text-xs">${cell}</td>`;
+                        });
+                        tableHTML += `</tr>`;
+                    });
+                    tableHTML += `</tbody></table>`;
+
+                    tableWrapper.innerHTML = tableHTML;
+                    sampleTablesArea.appendChild(tableWrapper);
+                });
+            } else {
+                sampleTablesArea.classList.add("hidden");
+            }
+
+            // Render Input Area based on Question Type
+            const answerArea = document.getElementById("answerInputArea");
+            answerArea.innerHTML = "";
+
+            const existingAnswer = appState.answers[index] || "";
+
+            if (question.type === "multiple-choice") {
+                question.options.forEach((opt, idx) => {
+                    const optId = `opt_${index}_${idx}`;
+                    const isChecked = existingAnswer === opt ? "checked" : "";
+                    const disabledAttr = isExpired ? "disabled" : "";
+
+                    const optionWrapper = document.createElement("div");
+                    optionWrapper.className = "relative";
+                    optionWrapper.innerHTML = `
+                        <input type="radio" id="${optId}" name="question_option" value="${escapeHtml(opt)}" ${isChecked} ${disabledAttr} onchange="handleAnswerChange('${index}', this.value)" class="peer sr-only custom-radio">
+                        <label for="${optId}" class="flex items-center gap-3 p-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer transition text-sm font-medium text-slate-800 peer-disabled:cursor-not-allowed peer-disabled:opacity-60">
+                            <span class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-bold shrink-0 peer-checked:border-brand-600 peer-checked:bg-brand-600 peer-checked:text-white">
+                                ${String.fromCharCode(65 + idx)}
+                            </span>
+                            <span class="flex-1">${escapeHtml(opt)}</span>
+                        </label>
+                    `;
+                    answerArea.appendChild(optionWrapper);
+                });
+            } else if (question.type === "fill-blank") {
+                const disabledAttr = isExpired ? "disabled" : "";
+                const inputEl = document.createElement("div");
+                inputEl.innerHTML = `
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Type your answer below:</label>
+                    <input type="text" value="${escapeHtml(existingAnswer)}" ${disabledAttr} oninput="handleAnswerChange('${index}', this.value)" placeholder="e.g. WHERE" class="w-full px-4 py-3 rounded-xl border border-slate-300 font-mono text-base focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none uppercase tracking-wide disabled:bg-slate-100 disabled:cursor-not-allowed" />
+                `;
+                answerArea.appendChild(inputEl);
+            } else if (question.type === "query-writing") {
+                const disabledAttr = isExpired ? "disabled" : "";
+                const inputEl = document.createElement("div");
+                inputEl.innerHTML = `
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Construct SQL Query:</label>
+                    <textarea rows="4" ${disabledAttr} oninput="handleAnswerChange('${index}', this.value)" placeholder="SELECT column_name FROM table_name..." class="w-full p-4 rounded-xl border border-slate-300 font-mono text-sm bg-slate-900 text-emerald-400 focus:ring-2 focus:ring-brand-500 outline-none disabled:opacity-75 disabled:cursor-not-allowed">${escapeHtml(existingAnswer)}</textarea>
+                    <p class="text-[11px] text-slate-400 mt-1">Note: Query evaluation normalizes capitalization and spacing differences automatically.</p>
+                `;
+                answerArea.appendChild(inputEl);
+            }
+
+            // Update Navigation Buttons (Back button removed — forward-only)
+            const btnNextText = document.getElementById("btnNextText");
+            if (index === TOTAL_QUESTIONS - 1) {
+                btnNextText.textContent = "SUBMIT ANSWERS";
+            } else {
+                btnNextText.textContent = "Next Question";
+            }
+            updateNextButtonState();
+
+            // Update Timer Display
+            updateTimerDisplay(appState.questionTimers[index]);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function handleAnswerChange(index, value) {
+            if (appState.expiredQuestions[index]) return; // locked
+            appState.answers[index] = value;
+            saveStateToStorage();
+            updateNextButtonState();
+        }
+
+        function hasAnswerForQuestion(index) {
+            const val = appState.answers[index];
+            return Boolean(val && String(val).trim() !== "");
+        }
+
+        function updateNextButtonState() {
+            const btnNext = document.getElementById("btnNext");
+            if (!btnNext) return;
+            const idx = appState.currentQuestionIndex;
+            // Expired/locked questions may proceed without an answer (auto-advance/submit);
+            // active questions require an entered/selected answer.
+            const canProceed = appState.expiredQuestions[idx] || hasAnswerForQuestion(idx);
+            btnNext.disabled = !canProceed;
+            btnNext.title = canProceed ? "" : "Please select or enter your answer before proceeding.";
+        }
+
+        // ===============================
+        // TIMER LOGIC
+        // ===============================
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                const curIdx = appState.currentQuestionIndex;
+
+                if (appState.quizCompleted) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                if (!appState.expiredQuestions[curIdx]) {
+                    appState.questionTimers[curIdx]--;
+
+                    if (appState.questionTimers[curIdx] <= 0) {
+                        appState.questionTimers[curIdx] = 0;
+                        appState.expiredQuestions[curIdx] = true;
+                        saveStateToStorage();
+
+                        // Auto advance on timeout
+                        handleQuestionTimeout(curIdx);
+                    } else {
+                        saveStateToStorage();
+                        updateTimerDisplay(appState.questionTimers[curIdx]);
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds) {
+            const timerSecsEl = document.getElementById("timerSeconds");
+            const container = document.getElementById("timerDisplayContainer");
+
+            timerSecsEl.textContent = seconds;
+
+            container.classList.remove("timer-danger", "bg-slate-900", "bg-amber-600", "bg-red-600");
+
+            if (seconds <= 5) {
+                container.classList.add("timer-danger");
+            } else if (seconds <= 10) {
+                container.classList.add("bg-amber-600");
+            } else {
+                container.classList.add("bg-slate-900");
+            }
+        }
+
+        function handleQuestionTimeout(index) {
+            renderQuestion(index); // re-render to apply disabled lock
+            setTimeout(() => {
+                if (index < TOTAL_QUESTIONS - 1) {
+                    navigateQuestion(1);
+                } else {
+                    // Last question timed out -> prompt submission modal
+                    openSubmitModal();
+                }
+            }, 800);
+        }
+
+        // ===============================
+        // NAVIGATION
+        // ===============================
+        function navigateQuestion(delta) {
+            if (delta < 0) return; // Back navigation disabled (Back button removed)
+            // Require an answer before manual Next/Submit (expired questions are exempt).
+            if (delta > 0) {
+                const curIdx = appState.currentQuestionIndex;
+                if (!appState.expiredQuestions[curIdx] && !hasAnswerForQuestion(curIdx)) {
+                    alert("Please select or enter your answer before proceeding to the next question.");
+                    updateNextButtonState();
+                    return;
+                }
+            }
+            const newIndex = appState.currentQuestionIndex + delta;
+
+            if (newIndex >= 0 && newIndex < TOTAL_QUESTIONS) {
+                renderQuestion(newIndex);
+            } else if (newIndex >= TOTAL_QUESTIONS) {
+                openSubmitModal();
+            }
+        }
+
+        function openSubmitModal() {
+            if (isUploading) return;
+            const st = document.getElementById("submitUploadStatus");
+            if (st) { st.classList.add("hidden"); st.textContent = ""; }
+            const btn = document.getElementById("btnConfirmSubmit");
+            if (btn) { btn.disabled = false; btn.textContent = "Confirm & Submit"; }
+            document.getElementById("submitConfirmModal").classList.remove("hidden");
+        }
+
+        function closeSubmitModal() {
+            if (isUploading) return; // don't allow closing mid-upload
+            document.getElementById("submitConfirmModal").classList.add("hidden");
+        }
+
+        function forceCloseSubmitModal() {
+            document.getElementById("submitConfirmModal").classList.add("hidden");
+        }
+
+        // ===============================
+        // ANSWER EVALUATION ENGINE
+        // ===============================
+        function normalizeSQL(sql) {
+            if (!sql) return "";
+            return sql
+                .toLowerCase()
+                .replace(/[\r\n]+/g, " ")       // remove line breaks
+                .replace(/\s+/g, " ")           // collapse whitespace
+                .replace(/;\s*$/, "")           // remove trailing semicolon
+                .replace(/\s*([=><,+\-*\/().])\s*/g, "$1") // normalize around operators
+                .trim();
+        }
+
+        function normalizeTextAnswer(value) {
+            return String(value || "").trim().replace(/\s+/g, " ").toLowerCase();
+        }
+
+        function checkAnswer(question, userAnswer) {
+            if (!userAnswer || !userAnswer.trim()) {
+                return false;
+            }
+
+            const rawUser = userAnswer.trim();
+            const plainCorrect = getCorrectAnswer(question);
+            const acceptsList = getAcceptsList(question);
+
+            if (question.type === "multiple-choice") {
+                return rawUser.toLowerCase() === String(plainCorrect).trim().toLowerCase();
+            }
+
+            if (question.type === "fill-blank") {
+                const normUser = normalizeTextAnswer(rawUser);
+                const normCorrect = normalizeTextAnswer(plainCorrect);
+
+                if (normUser === normCorrect) return true;
+
+                if (acceptsList && acceptsList.length > 0) {
+                    return acceptsList.some(acc => normalizeTextAnswer(acc) === normUser);
+                }
+                return false;
+            }
+
+            if (question.type === "query-writing") {
+                const normUser = normalizeSQL(rawUser);
+                const normCorrect = normalizeSQL(plainCorrect);
+
+                if (normUser === normCorrect) return true;
+
+                if (acceptsList && acceptsList.length > 0) {
+                    return acceptsList.some(acc => normalizeSQL(acc) === normUser);
+                }
+            }
+
+            return false;
+        }
+
+        // ===============================
+        // SUBMISSION
+        // ===============================
+        function confirmQuizSubmission() {
+            if (isUploading) return;
+            if (!isQuiz5WindowOpen()) {
+                alert("Quiz #5 is available only on " + QUIZ5_SCHEDULE_TEXT + ".");
+                forceCloseSubmitModal();
+                return;
+            }
+            if (timerInterval) clearInterval(timerInterval);
+
+            let score = 0;
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unansweredCount = 0;
+
+            const detailedResults = [];
+
+            appState.randomizedQuestions.forEach((q, idx) => {
+                const userAns = appState.answers[idx] || "";
+                const isAnswered = Boolean(userAns && userAns.trim());
+                const isCorrect = isAnswered && checkAnswer(q, userAns);
+
+                let status = "UNANSWERED";
+                if (isAnswered) {
+                    if (isCorrect) {
+                        status = "CORRECT";
+                        score += (q.points || 1);
+                        correctCount++;
+                    } else {
+                        status = "INCORRECT";
+                        incorrectCount++;
+                    }
+                } else {
+                    unansweredCount++;
+                }
+
+                const correctText = getCorrectAnswer(q);
+                const correctIdx = Array.isArray(q.options)
+                    ? q.options.findIndex(o => String(o).trim().toLowerCase() === String(correctText).trim().toLowerCase())
+                    : -1;
+                const correctOption = correctIdx >= 0 ? String.fromCharCode(65 + correctIdx) : "";
+
+                detailedResults.push({
+                    itemNumber: idx + 1,
+                    code: q.code || "",
+                    category: q.category || "Quiz #5",
+                    questionText: q.question.replace(/<[^>]*>/g, ' '),
+                    type: q.type,
+                    options: Array.isArray(q.options) ? q.options.slice() : [],
+                    studentAnswer: userAns || "No Answer",
+                    correctAnswer: correctText,
+                    correctOption: correctOption,
+                    explanation: q.explanation || "",
+                    status: status,
+                    points: isCorrect ? (q.points || 1) : 0
+                });
+            });
+
+            const percentage = ((score / TOTAL_QUESTIONS) * 100).toFixed(2);
+
+            appState.quizCompleted = true;
+            appState.submissionTimestamp = new Date().toLocaleString();
+            appState.scoreResult = {
+                score,
+                total: TOTAL_QUESTIONS,
+                percentage,
+                correctCount,
+                incorrectCount,
+                unansweredCount,
+                detailedResults
+            };
+
+            saveStateToStorage();
+
+            // Lock the quiz immediately, then upload the result PDF to Drive
+            // (replaces the old auto-download behavior).
+            forceCloseSubmitModal();
+            renderResultsScreen();
+
+            setTimeout(() => {
+                uploadResultPDFToDrive(false);
+            }, 300);
+        }
+
+        function renderResultsScreen() {
+            document.getElementById("quizContainer").classList.add("hidden");
+            document.getElementById("resultsContainer").classList.remove("hidden");
+
+            const res = appState.scoreResult;
+            if (!res) return;
+
+            document.getElementById("resStudentName").textContent = appState.studentName;
+            document.getElementById("resStudentId").textContent = appState.studentId;
+            document.getElementById("resScoreText").textContent = `Score: ${res.score}/${TOTAL_QUESTIONS}`;
+            document.getElementById("resStudentSection").textContent = appState.section ? `Section: ${appState.section}` : "";
+            document.getElementById("resultsBannerTitle").textContent = `Quiz #5 Completed`;
+            document.getElementById("resPercentageText").textContent = `${res.percentage}%`;
+
+            document.getElementById("resCorrectCount").textContent = res.correctCount;
+            document.getElementById("resIncorrectCount").textContent = res.incorrectCount;
+            document.getElementById("resUnansweredCount").textContent = res.unansweredCount;
+
+            // Render Review Table
+            const tbody = document.getElementById("reviewTableBody");
+            tbody.innerHTML = "";
+
+            res.detailedResults.forEach(item => {
+                const tr = document.createElement("tr");
+
+                let statusBadge = "";
+                if (item.status === "CORRECT") {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px]">CORRECT</span>`;
+                } else if (item.status === "INCORRECT") {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-bold text-[11px]">INCORRECT</span>`;
+                } else {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[11px]">UNANSWERED</span>`;
+                }
+
+                const isCode = item.type === "query-writing" || item.type === "fill-blank";
+                const ansStyle = isCode ? "font-mono text-xs bg-slate-100 p-1 rounded" : "";
+
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-slate-500">${item.itemNumber}</td>
+                    <td class="p-3 text-slate-500 text-xs">${escapeHtml(item.category)}${item.code ? " (" + escapeHtml(item.code) + ")" : ""}</td>
+                    <td class="p-3 max-w-xs font-medium text-slate-800">${escapeHtml(item.questionText)}</td>
+                    <td class="p-3"><span class="${ansStyle}">${escapeHtml(item.studentAnswer)}</span></td>
+                    <td class="p-3 max-w-xs text-slate-600 text-xs">${item.correctOption ? escapeHtml(item.correctOption) + ". " : ""}${escapeHtml(item.correctAnswer)}</td>
+                    <td class="p-3 max-w-xs text-slate-600 text-xs">${escapeHtml(item.explanation)}</td>
+                    <td class="p-3 text-center">${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Restore persisted Drive upload status so refresh shows the same state.
+            if (!appState.driveUpload) appState.driveUpload = { status: "idle", message: "", filename: "" };
+            if (appState.driveUpload.status === "success") {
+                setDriveUploadUI("success", `Uploaded: ${appState.driveUpload.filename || "result PDF"} is in Drive.`);
+            } else if (appState.driveUpload.status === "uploading") {
+                setDriveUploadUI("uploading", "Upload was interrupted (refresh/close). Tap Upload to retry.");
+                appState.driveUpload.status = "pending";
+                saveStateToStorage();
+            } else if (appState.driveUpload.status === "error" || appState.driveUpload.status === "pending") {
+                setDriveUploadUI("error", (appState.driveUpload.message || "Upload did not complete.") + " Tap Upload to retry.");
+            }
+        }
+
+        // ===============================
+        // PDF GENERATION + DRIVE UPLOAD (same pattern as questionnaire.html)
+        // ===============================
+        function buildResultPDFDoc() {
+            const res = appState.scoreResult;
+            if (!res) return null;
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const primaryColor = [30, 58, 138]; // slate/blue
+            const fontName = "helvetica";
+
+            // Header Banner
+            doc.setFillColor(30, 41, 59); // dark slate
+            doc.rect(0, 0, 210, 36, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFont(fontName, "bold");
+            doc.setFontSize(16);
+            doc.text("ITP 132 – Advanced Database Systems", 14, 14);
+
+            doc.setFontSize(10);
+            doc.setFont(fontName, "normal");
+            doc.text("OFFICIAL QUIZ #5 RESULT REPORT", 14, 22);
+            doc.text(`Faculty: Rich Anjo Capiloyan`, 14, 27);
+            doc.setFontSize(8);
+            doc.text("BSIT Quiz 5: Temporal, Spatial, and Multimedia Data", 14, 32);
+
+            // Student Metadata Block
+            doc.setTextColor(30, 41, 59);
+            doc.setFontSize(11);
+            doc.setFont(fontName, "bold");
+            doc.text("STUDENT INFORMATION", 14, 42);
+
+            doc.setDrawColor(226, 232, 240);
+            doc.setFillColor(248, 250, 252);
+            doc.roundedRect(14, 46, 182, 34, 2, 2, 'FD');
+
+            doc.setFontSize(9);
+            doc.setFont(fontName, "normal");
+            doc.text(`Student Name: ${appState.studentName}`, 18, 54);
+            doc.text(`Student ID: ${appState.studentId}`, 18, 60);
+            doc.text(`Section: ${appState.section || "N/A"}`, 18, 66);
+            doc.text(`Date & Time: ${appState.submissionTimestamp || appState.quizDate || "N/A"}`, 18, 72);
+
+            doc.setFont(fontName, "bold");
+            doc.text(`Final Score: ${res.score} / ${TOTAL_QUESTIONS}`, 120, 54);
+            doc.text(`Percentage: ${res.percentage}%`, 120, 60);
+            doc.text(`Status: Completed`, 120, 66);
+
+            // Summary Stats Cards Table
+            const summaryTableData = [
+                ["Total Questions", "Correct Answers", "Incorrect Answers", "Unanswered Items"],
+                [String(TOTAL_QUESTIONS), `${res.correctCount}`, `${res.incorrectCount}`, `${res.unansweredCount}`]
+            ];
+
+            doc.autoTable({
+                startY: 78,
+                head: [summaryTableData[0]],
+                body: [summaryTableData[1]],
+                theme: 'grid',
+                headStyles: { fillStyle: 'F', fillColor: [30, 58, 138], textColor: [255, 255, 255], fontStyle: 'bold', halign: 'center' },
+                bodyStyles: { halign: 'center', fontStyle: 'bold', fontSize: 11 },
+                margin: { left: 14, right: 14 }
+            });
+
+            // Item Summary Table
+            const tableColumns = ["#", "Category", "Type", "Result", "Points"];
+            const tableRows = res.detailedResults.map(r => [
+                r.itemNumber,
+                r.category,
+                r.type,
+                r.status,
+                `${r.points}`
+            ]);
+
+            doc.setFontSize(11);
+            doc.setFont(fontName, "bold");
+            doc.text("ITEM PERFORMANCE SUMMARY", 14, doc.lastAutoTable.finalY + 10);
+
+            doc.autoTable({
+                startY: doc.lastAutoTable.finalY + 14,
+                head: [tableColumns],
+                body: tableRows,
+                theme: 'striped',
+                headStyles: { fillColor: [51, 65, 85], textColor: [255, 255, 255], fontStyle: 'bold' },
+                columnStyles: {
+                    0: { cellWidth: 10, halign: 'center' },
+                    1: { cellWidth: 45 },
+                    2: { cellWidth: 35 },
+                    3: { cellWidth: 35, halign: 'center' },
+                    4: { cellWidth: 20, halign: 'center' }
+                },
+                didParseCell: function(data) {
+                    if (data.section === 'body' && data.column.index === 3) {
+                        const val = data.cell.raw;
+                        if (val === 'CORRECT') {
+                            data.cell.styles.textColor = [16, 185, 129];
+                            data.cell.styles.fontStyle = 'bold';
+                        } else if (val === 'INCORRECT') {
+                            data.cell.styles.textColor = [239, 68, 68];
+                            data.cell.styles.fontStyle = 'bold';
+                        } else {
+                            data.cell.styles.textColor = [245, 158, 11];
+                        }
+                    }
+                },
+                margin: { left: 14, right: 14 }
+            });
+
+            // Detailed Question & Answer Breakdown
+            doc.addPage();
+            doc.setFontSize(12);
+            doc.setFont(fontName, "bold");
+            doc.text("DETAILED QUESTION & ANSWER BREAKDOWN", 14, 16);
+
+            let currentY = 22;
+
+            res.detailedResults.forEach((item) => {
+                if (currentY > 260) {
+                    doc.addPage();
+                    currentY = 16;
+                }
+
+                doc.setFontSize(9);
+                doc.setFont(fontName, "bold");
+                doc.setTextColor(30, 41, 59);
+                doc.text(`Question ${item.itemNumber}${item.code ? " (" + item.code + ")" : ""} [${item.category}] - ${item.status}`, 14, currentY);
+
+                currentY += 4;
+                doc.setFont(fontName, "normal");
+                doc.setTextColor(71, 85, 105);
+
+                const splitQ = doc.splitTextToSize(`Q: ${item.questionText}`, 180);
+                doc.text(splitQ, 14, currentY);
+                currentY += (splitQ.length * 4) + 1;
+
+                if (Array.isArray(item.options) && item.options.length) {
+                    const splitOptions = [];
+                    item.options.forEach((opt, oi) => {
+                        const line = String.fromCharCode(65 + oi) + ". " + opt;
+                        doc.splitTextToSize(line, 175).forEach(part => splitOptions.push(part));
+                    });
+                    if (splitOptions.length) {
+                        doc.setFont(fontName, "normal");
+                        doc.setTextColor(100, 116, 139);
+                        doc.text(splitOptions, 18, currentY);
+                        currentY += (splitOptions.length * 4) + 1;
+                    }
+                }
+
+                doc.setFont(fontName, "bold");
+                doc.setTextColor(71, 85, 105);
+                doc.text(`Student Answer: `, 14, currentY);
+                doc.setFont(fontName, "normal");
+                const splitAns = doc.splitTextToSize(`${item.studentAnswer}`, 150);
+                doc.text(splitAns, 42, currentY);
+                currentY += (splitAns.length * 4);
+
+                doc.setFont(fontName, "bold");
+                doc.text(`Expected Answer: `, 14, currentY);
+                doc.setFont(fontName, "normal");
+                const splitCorr = doc.splitTextToSize(`${item.correctAnswer}`, 150);
+                doc.text(splitCorr, 42, currentY);
+                currentY += (splitCorr.length * 4) + 4;
+
+                if (item.explanation) {
+                    doc.setFont(fontName, "bold");
+                    doc.text(`Explanation: `, 14, currentY);
+                    doc.setFont(fontName, "normal");
+                    const splitExp = doc.splitTextToSize(`${item.explanation}`, 150);
+                    doc.text(splitExp, 42, currentY);
+                    currentY += (splitExp.length * 4) + 2;
+                }
+
+                doc.setDrawColor(226, 232, 240);
+                doc.line(14, currentY, 196, currentY);
+                currentY += 4;
+            });
+
+            const safeNamePart = String(appState.studentName || "Student")
+                .trim().replace(/[\\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").replace(/^\.+|\.+$/g, "").slice(0, 80);
+            const safeIdPart = String(appState.studentId || "NoID")
+                .trim().replace(/[\\/:*?"<>|]+/g, "_").replace(/\s+/g, " ").replace(/^\.+|\.+$/g, "").slice(0, 60);
+            const computedScore = Number(res.score) || 0;
+            const filename = `ITP 132 Quiz5_${safeIdPart}_${safeNamePart}_Score-${computedScore}-${TOTAL_QUESTIONS}.pdf`;
+            return { doc, filename };
+        }
+
+        // Manual fallback (kept for instructor use; auto-flow uploads instead of downloading).
+        function generateResultPDF() {
+            const built = buildResultPDFDoc();
+            if (!built) return;
+            built.doc.save(built.filename);
+        }
+
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const dataUrl = reader.result;
+                    resolve(String(dataUrl).split(',')[1] || '');
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        async function checkDuplicateFile(filename) {
+            const url = UPLOAD_SCRIPT_URL + '?action=check&filename=' + encodeURIComponent(filename) + '&folderId=' + encodeURIComponent(DRIVE_FOLDER_ID);
+            try {
+                const res = await fetch(url, { method: 'GET' });
+                const json = JSON.parse(await res.text());
+                if (json && typeof json.exists === 'boolean') return json.exists;
+                return null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setDriveUploadUI(state, message) {
+            const el = document.getElementById("driveUploadStatus");
+            const btn = document.getElementById("btnDriveUpload");
+            const btnText = document.getElementById("btnDriveUploadText");
+            if (el) {
+                el.classList.remove("hidden");
+                el.textContent = message;
+                el.className = "text-xs mt-2 px-3 py-2 rounded-lg border " + (
+                    state === "success" ? "bg-emerald-500/15 border-emerald-400 text-emerald-200" :
+                    state === "error" ? "bg-red-500/15 border-red-400 text-red-200" :
+                    "bg-sky-500/15 border-sky-400 text-sky-200"
+                );
+            }
+            if (btn) btn.disabled = (state === "uploading" || state === "success");
+            if (btnText) {
+                btnText.textContent =
+                    state === "success" ? "Uploaded to Drive ✓" :
+                    state === "uploading" ? "Uploading..." : "Upload PDF Result to Drive";
+            }
+        }
+
+        async function uploadResultPDFToDrive(manual) {
+            if (isUploading) return;
+            if (!appState.scoreResult) {
+                setDriveUploadUI("error", "No result to upload yet. Submit the quiz first.");
+                return;
+            }
+            if (!(window.jspdf && window.jspdf.jsPDF)) {
+                setDriveUploadUI("error", "PDF library not loaded (internet required). Reconnect and retry.");
+                return;
+            }
+            if (!UPLOAD_SCRIPT_URL) {
+                setDriveUploadUI("error", "Upload endpoint not configured. Ask your instructor to set UPLOAD_SCRIPT_URL.");
+                return;
+            }
+            if (!navigator.onLine) {
+                setDriveUploadUI("error", "No internet connection. Reconnect, then tap Upload again.");
+                return;
+            }
+
+            const built = buildResultPDFDoc();
+            if (!built) return;
+            const filename = built.filename;
+
+            // Skip re-upload when this file already succeeded (refresh-safe).
+            if (appState.driveUpload && appState.driveUpload.status === "success" && appState.driveUpload.filename === filename && !manual) {
+                setDriveUploadUI("success", `Already submitted: ${filename}`);
+                return;
+            }
+
+            isUploading = true;
+            setDriveUploadUI("uploading", `Checking Drive for "${filename}"...`);
+            appState.driveUpload = { status: "uploading", message: "Uploading...", filename };
+            saveStateToStorage();
+
+            try {
+                // Submit gate: if filename already exists in Drive, block upload and prompt.
+                const alreadyExists = await checkDuplicateFile(filename);
+                if (alreadyExists === true) {
+                    appState.driveUpload = { status: "success", message: "Already submitted.", filename };
+                    saveStateToStorage();
+                    setDriveUploadUI("success", `Already submitted: "${filename}" already exists in Drive.`);
+                    alert(`Already submitted: "${filename}" already exists in Drive.`);
+                    return;
+                }
+
+                setDriveUploadUI("uploading", alreadyExists === null
+                    ? "Connection check unclear — generating PDF and uploading..."
+                    : "No existing file found. Generating PDF and uploading... please wait.");
+
+                const blob = built.doc.output('blob');
+                const dataBase64 = await blobToBase64(blob);
+                const payload = JSON.stringify({
+                    filename,
+                    mimeType: 'application/pdf',
+                    dataBase64,
+                    studentId: appState.studentId,
+                    studentName: appState.studentName,
+                    folderId: DRIVE_FOLDER_ID
+                });
+
+                // Apps Script /exec redirects break CORS reads, so try readable first, then opaque no-cors.
+                let serverConfirmed = false;
+                try {
+                    const res = await fetch(UPLOAD_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: payload
+                    });
+                    const text = await res.text();
+                    let ok = res.ok;
+                    try {
+                        const json = JSON.parse(text);
+                        if (json && typeof json.success === 'boolean') ok = json.success;
+                        if (json && json.duplicate === true) throw Object.assign(new Error('DUPLICATE'), { isDuplicate: true });
+                        if (!ok && json && json.error) {
+                            if (/DUPLICATE/i.test(String(json.error))) throw Object.assign(new Error('DUPLICATE'), { isDuplicate: true });
+                            throw new Error(json.error);
+                        }
+                    } catch (e) {
+                        if (e && e.isDuplicate) throw e;
+                        if (!res.ok) throw new Error(text.slice(0, 200) || ('Upload failed (HTTP ' + res.status + ')'));
+                    }
+                    if (!ok) throw new Error('Upload rejected by server.');
+                    serverConfirmed = true;
+                } catch (corsErr) {
+                    if (corsErr && corsErr.isDuplicate) throw corsErr;
+                    try {
+                        await fetch(UPLOAD_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: payload
+                        });
+                    } catch (e2) {
+                        throw corsErr;
+                    }
+                }
+
+                if (serverConfirmed) {
+                    appState.driveUpload = { status: "success", message: "Uploaded.", filename };
+                    saveStateToStorage();
+                    setDriveUploadUI("success", `Submitted successfully! "${filename}" was uploaded to Drive.`);
+                } else {
+                    appState.driveUpload = { status: "pending", message: "Sent but unconfirmed.", filename };
+                    saveStateToStorage();
+                    setDriveUploadUI("error", `Upload sent but not confirmed (browser blocked the Drive reply). Open the Drive folder and verify "${filename}" exists; if missing, retry.`);
+                }
+            } catch (err) {
+                console.error(err);
+                if (err && (err.isDuplicate || /DUPLICATE/i.test(String((err && err.message) || '')))) {
+                    appState.driveUpload = { status: "success", message: "Already submitted.", filename };
+                    saveStateToStorage();
+                    setDriveUploadUI("success", `Already submitted: "${filename}" already exists in Drive.`);
+                    alert(`Already submitted: "${filename}" already exists in Drive.`);
+                } else {
+                    appState.driveUpload = { status: "error", message: String((err && err.message) || err), filename };
+                    saveStateToStorage();
+                    setDriveUploadUI("error", "Upload failed: " + (err && err.message ? err.message : err) + " Check connection and retry.");
+                }
+            } finally {
+                isUploading = false;
+                const btn = document.getElementById("btnConfirmSubmit");
+                if (btn) { btn.disabled = false; btn.textContent = "Confirm & Submit"; }
+            }
+        }
+
+        // ===============================
+        // ANTI-COPY PROTECTION (Questionnaire)
+        // ===============================
+        (function protectQuestionnaire() {
+            const quizEl = () => document.getElementById("quizContainer");
+            const isQuizVisible = () => {
+                const el = quizEl();
+                return el && !el.classList.contains("hidden");
+            };
+            const isEditableTarget = (t) => {
+                return t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
+            };
+            const selectionTouchesQuiz = () => {
+                const sel = window.getSelection();
+                if (!sel || sel.rangeCount === 0) return false;
+                const el = quizEl();
+                for (let i = 0; i < sel.rangeCount; i++) {
+                    const range = sel.getRangeAt(i);
+                    const container = range.commonAncestorContainer;
+                    const node = container.nodeType === 1 ? container : container.parentElement;
+                    if (node && el && (el === node || el.contains(node))) return true;
+                }
+                return false;
+            };
+
+            // Block copy / cut of questionnaire text (allow copying what user typed in inputs)
+            document.addEventListener("copy", (e) => {
+                if (!isQuizVisible()) return;
+                if (isEditableTarget(e.target)) return; // allow copy from own answer fields
+                if (selectionTouchesQuiz()) {
+                    e.preventDefault();
+                    e.clipboardData && e.clipboardData.setData("text/plain", "");
+                }
+            });
+            document.addEventListener("cut", (e) => {
+                if (!isQuizVisible()) return;
+                if (isEditableTarget(e.target)) return;
+                if (selectionTouchesQuiz()) e.preventDefault();
+            });
+
+            // Block right-click menu page-wide (allow it inside answer inputs for paste).
+            document.addEventListener("contextmenu", (e) => {
+                if (isEditableTarget(e.target)) return;
+                e.preventDefault();
+            });
+
+            // Block drag / selection start on questionnaire text
+            document.addEventListener("dragstart", (e) => {
+                const el = quizEl();
+                if (isQuizVisible() && el && el.contains(e.target) && !isEditableTarget(e.target)) {
+                    e.preventDefault();
+                }
+            });
+            document.addEventListener("selectstart", (e) => {
+                const el = quizEl();
+                if (isQuizVisible() && el && el.contains(e.target) && !isEditableTarget(e.target)) {
+                    e.preventDefault();
+                }
+            });
+
+            // View-source / devtools deterrents (page-wide) + copy blocks during quiz.
+            // NOTE: a static HTML page cannot truly block View Source / DevTools
+            // (browser menu, view-source: URL, disabling JS all bypass this).
+            document.addEventListener("keydown", (e) => {
+                const key = (e.key || "").toLowerCase();
+                // Always block: view-source, devtools, save/print (even inside inputs).
+                if ((e.ctrlKey || e.metaKey) && key === "u") e.preventDefault();
+                if (e.key === "F12" || ((e.ctrlKey || e.metaKey) && e.shiftKey && ["i", "j", "c"].includes(key))) {
+                    e.preventDefault();
+                }
+                if ((e.ctrlKey || e.metaKey) && ["s", "p"].includes(key)) e.preventDefault();
+                if (!isQuizVisible()) return;
+                if (isEditableTarget(e.target) || isEditableTarget(document.activeElement)) {
+                    // Inside answer inputs: allow normal typing/copy of own answer.
+                    return;
+                }
+                if ((e.ctrlKey || e.metaKey) && ["c", "x", "a"].includes(key)) {
+                    e.preventDefault();
+                }
+                if (e.key === "PrintScreen") {
+                    e.preventDefault();
+                    if (navigator.clipboard) navigator.clipboard.writeText("").catch(() => {});
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
