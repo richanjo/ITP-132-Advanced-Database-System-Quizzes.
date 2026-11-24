@@ -146,7 +146,7 @@
                 <div>
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <span class="inline-block bg-brand-50 text-brand-700 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-brand-100">Final Project</span>
-                        <span class="text-[11px] font-medium text-slate-500">Deadline: Dec 23, 2026 · 11:59 PM (PHT)</span>
+                        <span class="text-[11px] font-medium text-slate-500">Deadline: Dec 22, 2026 · 11:59 PM (PHT)</span>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mt-3">Final Project – Advanced Database Systems</h3>
                     <p class="text-xs text-slate-500 mt-1">Submit the required outputs based on your Integrative Programming 2 project.</p>
@@ -154,6 +154,9 @@
                         <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
                             <p class="text-sm font-semibold text-slate-800">Final Project Requirements</p>
                             <ol class="list-decimal pl-5 mt-2 space-y-3 text-xs text-slate-600">
+                                <li>Create a separate folder for your group inside the designated Google Drive folder.</li>
+                                <li>Upload all final project requirements.</li>
+                                <li>Ensure all files are complete, properly organized, and clearly labeled.</li>
                                 <li>
                                     <span class="font-semibold text-slate-800">System Documentation (PDF or DOCX)</span> – Include the following details:
                                     <ul class="list-disc pl-5 mt-2 space-y-1 text-slate-600">
@@ -171,14 +174,6 @@
                             </ol>
                         </div>
                         <div class="flex flex-col gap-4">
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex-1">
-                                <p class="text-sm font-semibold text-slate-800">Submission Instructions</p>
-                                <ul class="list-disc pl-5 mt-2 space-y-2 text-xs text-slate-600">
-                                    <li>Create a separate folder for your group inside the designated Google Drive folder.</li>
-                                    <li>Upload the system documentation, ERD, and screenshots inside your group's folder.</li>
-                                    <li>Ensure all files are complete, properly organized, and clearly labeled.</li>
-                                </ul>
-                            </div>
                             <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
                                 <p class="text-sm font-semibold text-amber-900">Important Reminder</p>
                                 <p class="text-xs text-amber-800 mt-1">This is the final project submission for your subjects. The documentation, ERD, and system screenshots are required components of the final project and will also serve as one of the requirements for <span class="font-semibold">Advanced Database Systems</span>. Make sure all required outputs are submitted before the deadline.</p>
@@ -192,7 +187,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5m0-5l-7 7m7-5a9 9 0 11-2.64-6.36L19 10"></path></svg>
                     </a>
                     <p id="finalProjectClosedMessage" aria-live="polite" class="hidden w-full text-sm font-semibold text-rose-700 bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5">Submission Closed – Deadline Has Passed</p>
-                    <p class="text-[11px] text-slate-500">Submissions are accepted until December 23, 2026 at 11:59 PM (Philippine Standard Time).</p>
+                    <p class="text-[11px] text-slate-500">Submissions are accepted until December 22, 2026 at 11:59 PM (Philippine Standard Time).</p>
                 </div>
             </div>
 
@@ -475,7 +470,7 @@
             const wallAsUtc = Date.UTC(year, month, day, hour, minute, 0);
             return wallAsUtc - getManilaOffsetMs(wallAsUtc);
         }
-        const FINAL_PROJECT_DEADLINE_MS = getManilaDeadlineMs(2026, 11, 23, 23, 59);
+        const FINAL_PROJECT_DEADLINE_MS = getManilaDeadlineMs(2026, 11, 22, 23, 59);
         function updateFinalProjectSubmissionStatus() {
             const ended = Date.now() >= FINAL_PROJECT_DEADLINE_MS;
             const submitBtn = document.getElementById("finalProjectSubmitBtn");
